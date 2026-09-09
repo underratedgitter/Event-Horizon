@@ -1,12 +1,14 @@
 <div align="center">
 
-# 🌌 EVENT HORIZON
+<a href="#-key-capabilities">
+  <img src="docs/assets/event-horizon-banner.svg" alt="Event Horizon Aerospace Banner" width="100%" style="border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.8);" />
+</a>
 
-### High-Performance N-Body Gravitational Physics Laboratory & Astrodynamics Flight Simulator
+<br/><br/>
 
 [![Node.js CI](https://img.shields.io/badge/Node.js-%3E%3D18.0.0-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Tests Passing](https://img.shields.io/badge/Tests-95%2F95%20Passing-00e5ff?style=for-the-badge&logo=vitest&logoColor=white)](test/)
-[![Throughput](https://img.shields.io/badge/Throughput-8%2C032%20RPS-f59e0b?style=for-the-badge&logo=speedtest&logoColor=white)](#-production-load-test-scorecard)
+[![Throughput](https://img.shields.io/badge/Throughput-8%2C032%20RPS-f59e0b?style=for-the-badge&logo=speedtest&logoColor=white)](#-production-benchmarks--load-test)
 [![Runtime Dependencies](https://img.shields.io/badge/Dependencies-0%20Zero-10b981?style=for-the-badge)](package.json)
 [![Canvas Engine](https://img.shields.io/badge/Canvas%202D-60%20FPS%20Retina-ec4899?style=for-the-badge&logo=html5&logoColor=white)](#)
 [![Web Audio](https://img.shields.io/badge/Audio-Web%20Audio%20API-a855f7?style=for-the-badge&logo=audacity&logoColor=white)](#)
@@ -14,14 +16,12 @@
 
 <br/>
 
-<a href="#-deep-dive-features">
-  <img src="docs/assets/event-horizon-hero.png" alt="Event Horizon Interface Preview" width="100%" style="border-radius: 14px; box-shadow: 0 24px 64px rgba(0,0,0,0.85); border: 1px solid rgba(0,229,255,0.35);" />
+<a href="#-interactive-simulation-interface">
+  <img src="docs/assets/event-horizon-hero.png" alt="Event Horizon Interface Preview" width="100%" style="border-radius: 12px; box-shadow: 0 24px 64px rgba(0,0,0,0.85); border: 1px solid rgba(0,229,255,0.35);" />
 </a>
 
-<br/><br/>
-
 <p align="center">
-  <b><a href="#-deep-dive-features">Key Capabilities</a></b> •
+  <b><a href="#-key-capabilities">Key Capabilities</a></b> •
   <b><a href="#-flight-simulator--keyboard-controls">Flight Controls</a></b> •
   <b><a href="#-theoretical-astrophysics--mathematics">Theoretical Physics</a></b> •
   <b><a href="#-system-architecture">Architecture</a></b> •
@@ -35,7 +35,7 @@
 
 ## 🔭 Executive Overview
 
-**Event Horizon** is an ultra-performant, zero-dependency browser-native astrophysics laboratory and aerospace flight simulator. Engineered with mathematical rigor and Matt Pocock software engineering discipline, it fuses:
+**Event Horizon** is an ultra-performant, zero-dependency browser-native astrophysics simulation laboratory and aerospace flight simulator. Engineered with mathematical rigor and Matt Pocock software engineering discipline, it fuses:
 
 - **Symplectic Velocity Verlet N-Body Gravitational Physics** ($O(N^2)$ pairwise gravity with momentum-conserving inelastic mergers and tidal Roche disruption).
 - **General Relativistic Mechanics**: Post-Newtonian orbital perihelion precession, millisecond pulsars with relativistic synchrotron jets, and Schwarzschild black holes with differential Doppler-beamed accretion disks.
@@ -49,32 +49,50 @@
 
 ---
 
-## 🌟 Deep-Dive Features
+## 🌟 Key Capabilities
 
 ### 🚀 1. Spacecraft Flight Simulator & Gravitational Slingshots
-- **Propellant Economics**: Real-time Delta-v ($\Delta v$) tracking based on the Tsiolkovsky rocket equation.
-- **Forward Predictive Trajectory**: Multi-step forward symplectic propagator forecasting gravitational assists around massive planets, periapsis speed boosts, and escape trajectories.
+```text
+ENGINE: Thrust Vector Propagator | METRIC: Tsiolkovsky Delta-v | PREDICTOR: 320 Forward Steps
+```
+- **Propellant Economics**: Real-time Delta-v ($\Delta v$) expenditure based on the Tsiolkovsky rocket equation with in-flight refuel seams.
+- **Forward Predictive Trajectory**: Multi-step forward symplectic propagator forecasting planetary gravitational assists, periapsis speed boosts, and escape trajectories.
 - **Flight Director HUD**: Real-time altitude, orbital eccentricity, velocity vector heading, and refuel controls.
 
-### 💥 2. Supernova Core-Collapse & Stellar Remnant Physics
-- **Catastrophic Core-Collapse**: Triggered manually or automatically when any star exceeds critical mass via accretion or collision.
-- **Relativistic Blast Wave**: Rapidly expanding plasma shockwave exerting radiation pressure ($P_{rad} \propto r^{-2}$) that pushes bodies and vaporizes micro-debris.
-- **Remnant Transformation**: Automatically collapses the progenitor core into either a high-frequency synchrotron **Pulsar** or a **Schwarzschild Black Hole** depending on residual mass.
+### 💥 2. Supernova Core-Collapse & Stellar Remnants
+```text
+TRIGGER: Mass Accretion > Critical Limit | BLAST: Radiation Pressure Wave | REMNANT: Pulsar / Black Hole
+```
+- **Catastrophic Core-Collapse**: Initiated automatically when a star accretes critical mass or coalesce via collisions.
+- **Relativistic Shockwave**: Rapidly expanding plasma wavefront exerting radiation pressure ($P_{rad} \propto r^{-2}$) that pushes bodies and vaporizes micro-debris.
+- **Dynamic Remnant Formation**: Collapses progenitor cores into spinning **Pulsars** (intermediate mass) or **Schwarzschild Black Holes** (supermassive).
 
 ### 🕳️ 3. Relativistic Black Holes & Doppler Accretion Disks
-- **Keplerian Velocity Shearing**: Differential rotation speed ($v \propto r^{-1/2}$) across logarithmic spiral density wave perturbations.
+```text
+VELOCITY: Keplerian Shearing (v ~ r^-0.5) | BOOST: Relativistic Doppler Beaming | PHOTON RING: 1.5 r_s
+```
+- **Keplerian Velocity Shearing**: Differential rotation speed across logarithmic spiral density wave perturbations.
 - **Relativistic Doppler Beaming**: Intense flux amplification on the approaching limb and dimming on the receding limb ($\delta = \gamma^{-1}(1 - \beta \cos\theta)^{-1}$).
 - **Photon Sphere Ring**: Exact visual rendering of the relativistic photon instability ring at $r_{ph} = 1.5 r_s$.
 
 ### 🌱 4. Circumstellar Habitable Zones & Astrobiology Corridors
+```text
+CORRIDOR: Runaway Greenhouse to Maximum Greenhouse | FLUX: L = M^3.5 | CLASSIFICATION: Infernal/Temperate/Cryogenic
+```
 - **Luminosity Scaling**: Dynamically computes runaway greenhouse limits, optimal Earth-flux midlines, and maximum greenhouse boundaries based on stellar luminosity ($L = M^{3.5}$).
 - **Planetary Climate Classification**: Real-time astrobiological scoring categorizing bodies as *Infernal*, *Temperate* (water-supporting Goldilocks), or *Cryogenic*.
 
 ### ⏱️ 5. Temporal Rewind & Lossless State Scrubbing
+```text
+BUFFER: 300-State High-Precision Ring | STATE DRIFT: 0.00% | PLAYBACK: Bidirectional & Frame-Stepping
+```
 - **300-Frame Ring Buffer**: Continuous circular buffer recording high-precision position, velocity, and mass vectors.
 - **Bidirectional Time Travel**: Scrub backwards in time, step frame-by-frame, or replay cosmic collisions with 100% numerical fidelity.
 
 ### 🎛️ 6. Procedural Web Audio Synthesizer Console
+```text
+SUB-BASS: Dual-Oscillator Ambient Resonance | STATIC: Cosmic Microwave Background | DETONATION: Frequency-Decay Booms
+```
 - **Dual-Oscillator Ambient Resonance**: Sub-bass cosmic drone with adjustable cutoff frequencies and resonance Q-factors.
 - **Stellar Radio Crackle**: Procedural white-noise generator simulating interstellar cosmic microwave background radiation.
 - **Impact Detonations**: Exponential frequency-decay oscillators synthesizing deep physical collision booms.
@@ -99,7 +117,7 @@ To model Einsteinian orbital precession (e.g., Mercury's perihelion advance), a 
 
 $$\vec{a}_{total} = -\frac{G M}{r^3}\vec{r} - \frac{3 G M L^2}{c^2 r^5}\vec{r}$$
 
-This causes an authentic advance of the line of apsides per orbital period:
+This induces an authentic advance of the line of apsides per orbital period:
 
 $$\Delta \varpi \approx \frac{6 \pi G M}{c^2 a (1 - e^2)}$$
 
@@ -255,6 +273,8 @@ Event-Horizon/
 │   └── PULL_REQUEST_TEMPLATE.md    # Code review & quality checklist
 ├── docs/
 │   ├── assets/                     # High-resolution screenshots & UI previews
+│   │   ├── event-horizon-banner.svg# High-craft vector aerospace banner
+│   │   └── event-horizon-hero.png  # Playwright verified interface screenshot
 │   ├── adr/                        # Architecture Decision Records
 │   └── spec/                       # Engineering specifications
 ├── e2e/
