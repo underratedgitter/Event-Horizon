@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Event Horizon — N-Body Gravity & Astrodynamics Simulator</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Canvas Viewport -->
+  <canvas id="sandbox-canvas"></canvas>
+
+  <!-- Top Navigation & Scenario HUD -->
+  <header class="hud-top">
+    <div class="hud-brand">
+      <span class="brand-icon">🌌</span>
+      <div class="brand-title">EVENT HORIZON</div>
+      <span class="badge-tag">N-BODY V2.0</span>
+    </div>
+
+    <!-- Scenarios -->
+    <div class="control-group">
+      <label for="preset-select" class="control-label">SCENARIO</label>
+      <select id="preset-select" class="glass-select">
+        <option value="solarSystem" selected>☀️ Solar System</option>
+        <option value="binaryStars">✨ Binary Star Dance</option>
+        <option value="blackHoleFeasting">🕳️ Black Hole Accretion</option>
+        <option value="galaxyCollision">🌀 Galactic Collision</option>
+        <option value="trojanAsteroids">🪐 Trojan Asteroids (L4/L5)</option>
+        <option value="pulsarSystem">⚡ Millisecond Pulsar & Jets</option>
+      </select>
+    </div>
+
+    <!-- Camera Mode -->
+    <div class="control-group">
+      <label for="camera-select" class="control-label">CAM</label>
+      <select id="camera-select" class="glass-select" title="Cinematic Camera Mode (Keys: 1, 2, 3, 4)">
+        <option value="free" selected>Free Cam (1)</option>
+        <option value="locked">Body-Locked (2)</option>
+        <option value="chase">Chase Cam (3)</option>
+        <option value="barycenter">Barycenter (4)</option>
+      </select>
+    </div>
+
+    <!-- Playback & Temporal Controls -->
+    <div class="hud-playback">
+      <button id="btn-rewind" class="btn-icon" title="Step 1 Frame Backwards">⏮ Step Back</button>
+      <button id="btn-play" class="btn-icon active" title="Play/Pause (Space)">⏸ Pause</button>
+      <button id="btn-step" class="btn-icon" title="Step 1 Frame">⏯ Step</button>
+      
+      <!-- Time Ring Buffer Scrubbing -->
+      <div class="scrub-group" title="Scrub back and forth through recorded physics states">
+        <label for="slider-scrub" class="control-label">HISTORY: <span id="scrub-val" class="tnum">0/0</span></label>
+        <input type="range" id="slider-scrub" min="0" max="0" value="0" class="glass-slider scrub-slider">
+      </div>
+
+      <div class="speed-control">
+        <label for="slider-speed" class="control-label">WARP: <span id="speed-val">1.0x</span></label>
+        <input type="range" id="slider-speed" min="0.1" max="5.0" step="0.1" value="1.0" class="glass-slider">
+      </div>
+
+      <button id="btn-reset" class="btn-icon" title="Reset Current Preset">↺ Reset</button>
+      <button id="btn-clear" class="btn-icon danger" title="Clear all celestial bodies">🗑 Clear</button>
+      <button id="btn-missions" class="btn-icon highlight" title="Open Aerospace Flight Challenges">🚀 Missions</button>
+      <button id="btn-sound" class="btn-icon" title="Toggle Cosmic Audio">🔊 Audio On</button>
+      <button id="btn-mixer" class="btn-icon" title="Open Audio Synthesizer Mixer Panel">🎛️ Mixer</button>
+      <button id="btn-share" class="btn-icon" title="Copy Shareable Scenario URL">🔗 Share</button>
+    </div>
+  </header>
+
+  <!-- Audio Synthesizer Mixer Modal Panel -->
+  <div id="mixer-panel" class="hud-modal hidden">
+    <div class="modal-header">
+      <div class="modal-title">🎛️ COSMIC AUDIO SYNTHESIZER MIXER</div>
+      <button id="btn-close-mixer" class="btn-close" title="Close Mixer">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="mixer-channel">
+        <div class="channel-header">
+          <span class="channel-name">AMBIENT DRONE RESONANCE</span>
+          <span id="mixer-drone-val" class="channel-val">8%</span>
+        </div>
+        <input type="range" id="slider-mixer-drone" min="0" max="0.3" step="0.01" value="0.08" class="glass-slider">
+        <div class="channel-sub">
+          <label for="slider-mixer-resonance" class="control-label">FILTER CUTOFF (Q: 2.0): <span id="mixer-res-val">140 Hz</span></label>
+          <input type="range" id="slider-mixer-resonance" min="60" max="450" step="5" value="140" class="glass-slider">
+        </div>
+      </div>
+
+      <div class="mixer-channel">
+        <div class="channel-header">
+          <span class="channel-name">STELLAR RADIO CRACKLE</span>
+          <span id="mixer-crackle-val" class="channel-val">3%</span>
+        </div>
+        <input type="range" id="slider-mixer-crackle" min="0" max="0.15" step="0.005" value="0.03" class="glass-slider">
+        <span class="channel-hint">Procedural interstellar static burst generator (Bandpass 1.6 kHz)</span>
+      </div>
+
+      <div class="mixer-channel">
+        <div class="channel-header">
+          <span class="channel-name">COLLISION IMPACT BOOM GAIN</span>
+          <span id="mixer-boom-val" class="channel-val">1.0x</span>
+        </div>
+        <input type="range" id="slider-mixer-boom" min="0" max="3.0" step="0.1" value="1.0" class="glass-slider">
+        <span class="channel-hint">Dynamic pitch sweep & exponential bass resonance</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aerospace Flight Challenges & Mission Mode Modal -->
+  <div id="missions-panel" class="hud-modal missions-modal hidden">
+    <div class="modal-header">
+      <div class="modal-title">🚀 AEROSPACE FLIGHT CHALLENGES</div>
+      <button id="btn-close-missions" class="btn-close" title="Close Missions Drawer">✕</button>
+    </div>
+    <div class="modal-body mission-cards-container">
+      <!-- Challenge 1: Lunar Orbit Insertion -->
+      <div class="mission-card" data-mission="lunar-insertion">
+        <div class="mission-card-header">
+          <span class="mission-badge intermediate">INTERMEDIATE</span>
+          <span class="mission-timer-badge">⏱ 60s</span>
+        </div>
+        <div class="mission-card-title">🌙 Lunar Orbit Insertion</div>
+        <div class="mission-card-desc">Apollo-style trans-lunar flight. Navigate probe towards target Moon and brake to achieve circular parking orbit (radius ~40 AU). Hold stable orbit for 2.0s without surface collision.</div>
+        <div class="mission-checklist">
+          <div class="check-item"><span>◎ Approach target Moon</span></div>
+          <div class="check-item"><span>◎ Match circular orbital speed</span></div>
+          <div class="check-item"><span>◎ Maintain stable orbit for 2.0s</span></div>
+        </div>
+        <button class="btn-launch-mission" data-mission-id="lunar-insertion">▶ Launch Challenge</button>
+      </div>
+
+      <!-- Challenge 2: Jupiter Slingshot -->
+      <div class="mission-card" data-mission="jupiter-slingshot">
+        <div class="mission-card-header">
+          <span class="mission-badge advanced">ADVANCED</span>
+          <span class="mission-timer-badge">⏱ 45s</span>
+        </div>
+        <div class="mission-card-title">🪐 Jupiter Slingshot</div>
+        <div class="mission-card-desc">Gravity-assist hyperbolic flyby. Thread the narrow gravitational needle outside Jupiter's dense atmosphere (R &gt; 40 AU) to gain hyperbolic boost and escape the solar system (R &gt; 700 AU).</div>
+        <div class="mission-checklist">
+          <div class="check-item"><span>◎ Enter Jupiter gravity well</span></div>
+          <div class="check-item"><span>◎ Pass periapsis outside atmosphere (R &gt; 40)</span></div>
+          <div class="check-item"><span>◎ Boost to escape boundary (R &gt; 700)</span></div>
+        </div>
+        <button class="btn-launch-mission" data-mission-id="jupiter-slingshot">▶ Launch Challenge</button>
+      </div>
+
+      <!-- Challenge 3: Event Horizon Slalom -->
+      <div class="mission-card" data-mission="event-horizon-slalom">
+        <div class="mission-card-header">
+          <span class="mission-badge expert">EXPERT</span>
+          <span class="mission-timer-badge">⏱ 40s</span>
+        </div>
+        <div class="mission-card-title">🕳️ Event Horizon Slalom</div>
+        <div class="mission-card-desc">Relativistic singularity navigation. Pilot through the extreme gravitational saddle between binary Schwarzschild black holes without breaching the 1.5 rs photon sphere instability boundary.</div>
+        <div class="mission-checklist">
+          <div class="check-item"><span>◎ Traverse binary singularity corridor</span></div>
+          <div class="check-item"><span>◎ Stay outside photon spheres (R &gt; 1.5 rs)</span></div>
+          <div class="check-item"><span>◎ Reach extraction gateway (X &gt; 400)</span></div>
+        </div>
+        <button class="btn-launch-mission" data-mission-id="event-horizon-slalom">▶ Launch Challenge</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Active Mission In-Flight Telemetry HUD Overlay -->
+  <div id="mission-hud" class="hud-mission-bar hidden">
+    <div class="mhud-left">
+      <div class="mhud-badge" id="mhud-badge">MISSION ACTIVE</div>
+      <div class="mhud-title" id="mhud-title">Lunar Orbit Insertion</div>
+    </div>
+
+    <div class="mhud-center">
+      <div class="mhud-guidance" id="mhud-guidance">ALL SYSTEMS NOMINAL</div>
+      <div class="mhud-progress-container" id="mhud-progress-box">
+        <div class="mhud-progress-label">HOLD DURATION: <span id="mhud-hold-text">0.0s / 2.0s</span></div>
+        <div class="mhud-progress-track">
+          <div class="mhud-progress-fill" id="mhud-hold-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mhud-telemetry">
+      <div class="mhud-stat">
+        <span class="stat-label">TIME REMAINING</span>
+        <span class="stat-val" id="mhud-timer">60.0s</span>
+      </div>
+      <div class="mhud-stat">
+        <span class="stat-label">PROBE SPEED</span>
+        <span class="stat-val" id="mhud-speed">0.0 km/s</span>
+      </div>
+      <div class="mhud-stat">
+        <span class="stat-label">TARGET DIST</span>
+        <span class="stat-val" id="mhud-dist">0.0 AU</span>
+      </div>
+    </div>
+
+    <div class="mhud-controls">
+      <button id="btn-mission-reset" class="btn-icon" title="Restart Challenge">↺ Retry</button>
+      <button id="btn-mission-abort" class="btn-icon danger" title="Abort Mission">✕ Abort</button>
+    </div>
+  </div>
+
+  <!-- Mission Result Modal (Victory / Defeat) -->
+  <div id="mission-result-modal" class="hud-modal result-modal hidden">
+    <div class="result-box" id="result-box">
+      <div class="result-icon" id="result-icon">🏆</div>
+      <div class="result-title" id="result-title">MISSION ACCOMPLISHED</div>
+      <div class="result-subtitle" id="result-subtitle">Keplerian Orbit Captured</div>
+      <div class="result-reason" id="result-reason"></div>
+      <div class="result-actions">
+        <button id="btn-result-retry" class="btn-action">↺ Retry Challenge</button>
+        <button id="btn-result-next" class="btn-action primary">▶ Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spacecraft Flight Simulator & Slingshot Telemetry HUD -->
+  <div id="spacecraft-hud" class="hud-spacecraft-panel hidden">
+    <div class="sc-header">
+      <div class="sc-title">
+        <span class="sc-icon">🛸</span>
+        <span id="sc-name">ODYSSEY-1 PROBE</span>
+      </div>
+      <span class="sc-status-badge" id="sc-thrust-status">STANDBY</span>
+    </div>
+
+    <!-- Delta-v Propellant Gauge -->
+    <div class="sc-fuel-section">
+      <div class="sc-fuel-label">
+        <span>PROPELLANT (Δv BUDGET)</span>
+        <span id="sc-deltav-val">25.0 / 25.0 AU/s</span>
+      </div>
+      <div class="sc-fuel-track">
+        <div class="sc-fuel-fill" id="sc-fuel-bar" style="width: 100%"></div>
+      </div>
+      <div class="sc-fuel-pct" id="sc-fuel-pct">100% CAPACITY</div>
+    </div>
+
+    <!-- Flight Telemetry -->
+    <div class="sc-telemetry-grid">
+      <div class="sc-stat">
+        <span class="sc-stat-lbl">VELOCITY</span>
+        <span class="sc-stat-val" id="sc-speed-val">12.5 AU/s</span>
+      </div>
+      <div class="sc-stat">
+        <span class="sc-stat-lbl">THRUST PWR</span>
+        <span class="sc-stat-val">8.0 AU/s²</span>
+      </div>
+    </div>
+
+    <!-- Gravity Assist Slingshot Telemetry Callout -->
+    <div class="sc-slingshot-banner" id="sc-slingshot-info">
+      <span class="slingshot-icon">⚡</span>
+      <span class="slingshot-text" id="sc-slingshot-text">TRAJECTORY: COMPUTING...</span>
+    </div>
+
+    <!-- Thruster Vector Controls -->
+    <div class="sc-controls">
+      <div class="sc-control-title">REACTION CONTROL THRUSTERS (WASD / ARROWS)</div>
+      <div class="sc-dpad">
+        <button id="btn-sc-prograde" class="btn-sc-thrust" title="Prograde Thrust [W / ↑]">▲ Prograde [W]</button>
+        <div class="sc-dpad-row">
+          <button id="btn-sc-radial-in" class="btn-sc-thrust" title="Radial-In [A / ←]">◀ Radial-In [A]</button>
+          <button id="btn-sc-retrograde" class="btn-sc-thrust" title="Retrograde [S / ↓]">▼ Retrograde [S]</button>
+          <button id="btn-sc-radial-out" class="btn-sc-thrust" title="Radial-Out [D / →]">▶ Radial-Out [D]</button>
+        </div>
+      </div>
+      <div class="sc-actions">
+        <button id="btn-sc-refuel" class="btn-action small" title="Refuel Propellant [R]">⚡ Refuel [R]</button>
+        <button id="btn-sc-dock" class="btn-action small primary" title="Follow Spacecraft Camera">🔭 Cam Follow</button>
+        <button id="btn-sc-close" class="btn-action small danger" title="Despawn Spacecraft">✕ Exit Flight</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast-notification" class="toast hidden"></div>
+
+  <!-- Left Sidebar: Tools & Body Creator -->
+  <aside class="hud-left">
+    <div class="panel-section">
+      <div class="section-title">TOOL MODE</div>
+      <div class="btn-pill-group">
+        <button class="mode-btn active" data-mode="launch">🚀 Launch</button>
+        <button class="mode-btn" data-mode="pan">✋ Pan View</button>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">SPAWN BODY</div>
+      <div class="body-palette">
+        <button class="type-btn active" data-type="planet">
+          <span class="type-icon planet-icon"></span>
+          <span>Planet</span>
+        </button>
+        <button class="type-btn" data-type="star">
+          <span class="type-icon star-icon"></span>
+          <span>Star</span>
+        </button>
+        <button class="type-btn" data-type="black-hole">
+          <span class="type-icon hole-icon"></span>
+          <span>Black Hole</span>
+        </button>
+        <button class="type-btn" data-type="pulsar">
+          <span class="type-icon pulsar-icon"></span>
+          <span>Pulsar</span>
+        </button>
+        <button class="type-btn" data-type="moon">
+          <span class="type-icon moon-icon"></span>
+          <span>Moon</span>
+        </button>
+        <button class="type-btn" data-type="debris">
+          <span class="type-icon debris-icon"></span>
+          <span>Asteroid</span>
+        </button>
+        <button class="type-btn" data-type="spacecraft">
+          <span class="type-icon spacecraft-icon">🛸</span>
+          <span>Spacecraft</span>
+        </button>
+      </div>
+      <button id="btn-spawn-spacecraft" class="btn-action primary pulse-btn" style="margin-top: 10px; width: 100%;" title="Spawn and Pilot Player Spacecraft">🛸 Launch Odyssey Probe</button>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">PHYSICS CONFIG</div>
+      <div class="param-row">
+        <label for="slider-g">Gravity (G): <span id="g-val">2.0</span></label>
+        <input type="range" id="slider-g" min="0.5" max="8.0" step="0.5" value="2.0" class="glass-slider">
+      </div>
+      <div class="checkbox-row">
+        <label><input type="checkbox" id="chk-habitable" checked> Circumstellar Habitable Zones</label>
+      </div>
+      <div class="checkbox-row">
+        <label><input type="checkbox" id="chk-trails" checked> Orbital Trails</label>
+      </div>
+      <div class="checkbox-row">
+        <label><input type="checkbox" id="chk-labels" checked> Body Labels</label>
+      </div>
+      <div class="checkbox-row">
+        <label><input type="checkbox" id="chk-maneuver" checked> Maneuver Assist Guide</label>
+      </div>
+      <div class="checkbox-row">
+        <label><input type="checkbox" id="chk-spacetime" checked> Spacetime Curvature Grid</label>
+      </div>
+      <div class="checkbox-row">
+        <label><input type="checkbox" id="chk-radar" checked> Picture-in-Picture Radar</label>
+      </div>
+      <div class="checkbox-row">
+        <label><input type="checkbox" id="chk-reticles" checked> Tactical Reticles</label>
+      </div>
+      <div class="checkbox-row">
+        <label><input type="checkbox" id="chk-precession"> Relativistic Precession (GR)</label>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Right Sidebar: Inspector Panel -->
+  <aside id="inspector-panel" class="hud-right hidden">
+    <div class="inspector-header">
+      <div class="section-title">TELEMETRY INSPECTOR</div>
+      <div class="badge-group">
+        <span id="insp-type" class="badge-type">PLANET</span>
+        <span id="insp-orbit-badge" class="badge-orbit">CIRCULAR</span>
+      </div>
+    </div>
+    <div id="insp-name" class="insp-title">Earth</div>
+
+    <div class="insp-metrics">
+      <div class="metric-row">
+        <span class="metric-label">Mass</span>
+        <span id="insp-mass" class="metric-val">6.0</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Orbital Velocity</span>
+        <span id="insp-speed" class="metric-val">12.50 km/s</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Primary Attractor</span>
+        <span id="insp-primary" class="metric-val">Sun</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Eccentricity (e)</span>
+        <span id="insp-ecc" class="metric-val">0.015</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Periapsis (rp)</span>
+        <span id="insp-periapsis" class="metric-val">148.0 AU</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Apoapsis (ra)</span>
+        <span id="insp-apoapsis" class="metric-val">152.0 AU</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Orbital Period (T)</span>
+        <span id="insp-period" class="metric-val">62.8 s</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Barycenter Dist</span>
+        <span id="insp-dist" class="metric-val">150.0 AU</span>
+      </div>
+    </div>
+
+    <!-- Habitable Zone & Climate Classification -->
+    <div id="insp-climate-box" class="climate-box hidden">
+      <div class="section-title">PLANETARY CLIMATE & HABITABILITY</div>
+      <div class="metric-row">
+        <span class="metric-label">Climate Regime</span>
+        <span id="insp-climate-badge" class="badge-climate">TEMPERATE</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Habitability Score</span>
+        <span id="insp-habitability-score" class="metric-val highlight">98%</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Surface Temp (est.)</span>
+        <span id="insp-temp" class="metric-val">288 K (15°C)</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Insolation Primary</span>
+        <span id="insp-star-dist" class="metric-val">Sun (150 AU)</span>
+      </div>
+    </div>
+
+    <!-- Hohmann Maneuver Planner -->
+    <div class="hohmann-box">
+      <div class="section-title">HOHMANN TRANSFER PLANNER</div>
+      <div class="param-row">
+        <label for="hohmann-target-select" class="control-label">DESTINATION:</label>
+        <select id="hohmann-target-select" class="glass-select"></select>
+      </div>
+      <div id="hohmann-metrics" class="hohmann-readout hidden">
+        <div class="metric-row">
+          <span class="metric-label">Departure (Δv1)</span>
+          <span id="hohmann-dv1" class="metric-val">0.00 km/s</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Arrival (Δv2)</span>
+          <span id="hohmann-dv2" class="metric-val">0.00 km/s</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Total Delta-v</span>
+          <span id="hohmann-total-dv" class="metric-val highlight">0.00 km/s</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Transfer Time</span>
+          <span id="hohmann-time" class="metric-val">0.0 s</span>
+        </div>
+      </div>
+      <button id="btn-hohmann-plot" class="btn-action">📐 Plot Transfer Orbit</button>
+    </div>
+
+    <div class="insp-actions">
+      <button id="btn-insp-follow" class="btn-action primary">🔭 Follow Body</button>
+      <button id="btn-insp-supernova" class="btn-action supernova-btn hidden">💥 Trigger Supernova</button>
+      <div class="action-grid">
+        <button id="btn-insp-double" class="btn-action">2x Mass</button>
+        <button id="btn-insp-half" class="btn-action">½ Mass</button>
+      </div>
+      <button id="btn-insp-delete" class="btn-action danger">🗑 Disintegrate</button>
+    </div>
+  </aside>
+
+  <!-- Bottom Footer Telemetry Bar -->
+  <footer class="hud-bottom">
+    <div class="telemetry-item">
+      <span class="telemetry-label">BODIES:</span>
+      <span id="body-count" class="telemetry-value">0</span>
+    </div>
+    <div class="telemetry-item">
+      <span class="telemetry-label">FPS:</span>
+      <span id="fps-val" class="telemetry-value">60</span>
+    </div>
+    <div class="telemetry-hint">
+      <span>💡 <strong>Click & Drag</strong> to launch trajectory • <strong>Right-Click / Wheel</strong> to pan & zoom • <strong>[Space]</strong> to pause • <strong>[C]</strong> clear trails</span>
+    </div>
+  </footer>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

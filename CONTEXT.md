@@ -1,0 +1,157 @@
+# Cosmic Sandbox
+
+A high-performance interactive 2D N-body orbital mechanics and gravitational simulation sandbox.
+
+## Language
+
+### Celestial Objects
+
+**Celestial Body**:
+An autonomous physical entity in the simulation with mass, radius, position, velocity, and physical classification.
+_Avoid_: Object, entity, dot, particle
+
+**Body Type**:
+The physical classification of a Celestial Body (`star`, `planet`, `moon`, `black-hole`, `debris`).
+_Avoid_: Kind, category, class
+
+**Black Hole**:
+An ultra-massive Celestial Body with an event horizon, rotating accretion disk, and gravitational lensing distortion ring.
+_Avoid_: Void, sink
+
+### Physics & Dynamics
+
+**Softening Length**:
+A non-zero spatial buffer ($\epsilon$) added to gravitational distance calculations to prevent infinite acceleration singularities during close flybys.
+_Avoid_: Epsilon, dampening buffer, clamp
+
+**Coalescence**:
+The inelastic collision and merger of two Celestial Bodies conserving total linear momentum and combining mass.
+_Avoid_: Merge, smash, absorption
+
+**Roche Limit**:
+The critical distance from a massive body inside which tidal forces disrupt a smaller body into scattered debris particles.
+_Avoid_: Breakup line, tear threshold
+
+**Trajectory Vector**:
+A user-directed 2D displacement and velocity vector indicating the launch parameters for spawning a Celestial Body.
+_Avoid_: Launch arrow, aim line
+
+**Accretion Disk**:
+A glowing, differential Keplerian disk of rotating luminous particles orbiting a Black Hole.
+_Avoid_: Orbit ring, halo
+
+**Relativistic Pulsar**:
+A rapidly spinning, highly magnetized neutron star emitting sweeping conical synchrotron radiation jets from its magnetic poles.
+_Avoid_: Spinner, lighthouse star
+
+**Synchrotron Radiation Jets**:
+Collimated relativistic beams of charged particles ejected along the magnetic dipole axis of a Pulsar or Black Hole.
+_Avoid_: Laser beam, ray, blaster
+
+### Visual Optics & Field Dynamics
+
+**Spacetime Curvature Grid**:
+A 2D deformed coordinate lattice visualizing the scalar gravitational potential well $\Phi(\vec{x})$, sagging and compressing in proximity to massive bodies.
+_Avoid_: Gravity net, wireframe mesh, sink grid
+
+**Tactical Targeting Reticle**:
+An aerospace targeting bracket projected onto selected or hovered Celestial Bodies streaming live osculating orbital telemetry vectors (semi-major axis, apoapsis, periapsis, velocity vector, period).
+_Avoid_: Crosshair, aim box, selection circle
+
+**Orbital Radar HUD**:
+A picture-in-picture macro-scale mini-map overlay rendering the global cosmic system, Lagrange points, and the camera viewport frustum.
+_Avoid_: Minimap, radar box, overview map
+
+**Collision Shockwave Ring**:
+An expanding radial compression wavefront generated at the epicenter of Celestial Coalescence, exhibiting chromatic dispersion and gradual atmospheric dissipation.
+_Avoid_: Blast wave, ripple circle
+
+**Keplerian Shearing**:
+Differential rotation within an accretion disk where inner orbital annuli rotate at higher angular velocities than outer regions ($v \propto r^{-1/2}$).
+_Avoid_: Speed gradient, swirl
+
+**Doppler Beaming**:
+Relativistic flux asymmetry causing the forward-approaching limb of a rotating accretion disk to appear luminous and blueshifted while the receding limb dims.
+_Avoid_: One-sided glow, shadow side
+
+### Mechanics & Orbital Guidance
+
+**State Ring Buffer (Time Scrubbing)**:
+A fixed-capacity circular history buffer caching discrete physical states of all bodies, enabling reversible temporal navigation and frame-accurate state scrubbing.
+_Avoid_: Undo buffer, replay list, history slider
+
+**Hohmann Transfer Orbit**:
+An elliptical orbital trajectory with tangential impulses at apsides employed to transfer a Celestial Body between two coplanar circular orbits with minimal delta-v expenditure.
+_Avoid_: Orbit hop, transfer line, route assist
+
+**Relativistic Perihelion Precession**:
+The post-Newtonian anomalous rotation of an eccentric orbit's line of apsides caused by general relativistic spacetime curvature corrections ($\vec{a}_{GR} = -\frac{3 G M L^2}{c^2 r^4} \hat{r}$).
+_Avoid_: Orbit drift, perihelion wobble, spin shift
+
+**Chase Camera**:
+A dynamic camera frame rigidly locked onto a Celestial Body and rotated to align with its instantaneous velocity vector.
+_Avoid_: Follow cam, car camera, pilot view
+
+**Barycentric Camera**:
+An automated camera mode dynamically centering the viewport on the system's center of mass and framing all major bodies.
+_Avoid_: Center-all view, group tracker
+
+### Stellar Evolution & Tactical Operations
+
+**Supernova Core-Collapse**:
+Catastrophic gravitational collapse of a progenitor star's core upon exceeding critical mass or manual detonation, discharging an expanding relativistic plasma shockwave and condensing into a compact Stellar Remnant.
+_Avoid_: Star explosion, big blast, burst
+
+**Radiation Pressure Wave**:
+An expanding spherical relativistic wavefront generated by a Supernova Core-Collapse, exerting inverse-square outward radiation force ($\vec{F}_{rad} \propto 1/r^2$) that repels celestial bodies and vaporizes micro-debris.
+_Avoid_: Blast wind, shock push, repulsor ring
+
+**Stellar Remnant**:
+The ultra-dense compact astrophysical object remaining after a Supernova Core-Collapse, collapsing into either a spinning Relativistic Pulsar or a Schwarzschild Black Hole based on residual mass.
+_Avoid_: Dead core, leftover, remnant dot
+
+**Photon Sphere Boundary**:
+The critical relativistic radial perimeter at $r = 1.5 r_s$ around a Black Hole where orbital photon velocity equals $c$, defining the lethal capture horizon during orbital maneuvers.
+_Avoid_: Danger line, kill circle, outer void
+
+**Aerospace Flight Challenge**:
+A structured tactical mission requiring orbital trajectory execution under strict spatial proximity windows, velocity tolerance envelopes, and temporal countdown constraints.
+_Avoid_: Level, mini-game, stage
+
+### Spacecraft Flight Simulator & Trajectory Prediction
+
+**Spacecraft Controller**:
+An autonomous or player-piloted spacecraft entity endowed with dry mass, reaction control system (RCS) thrusters, main engine propulsion, and propellant mass tracking.
+_Avoid_: Ship, rocket player, avatar, probe item
+
+**Delta-v Budget ($\Delta v$)**:
+The scalar propellant capacity measured in velocity increment ($\text{km/s}$ or $\text{AU/s}$) available to a Spacecraft Controller before fuel exhaustion.
+_Avoid_: Fuel meter, gas bar, energy gauge
+
+**Gravitational Slingshot (Gravity Assist)**:
+An orbital mechanic maneuver leveraging a planet's gravity well and orbital momentum to deflect a spacecraft trajectory and achieve hyperbolic velocity gains without propellant expenditure.
+_Avoid_: Speed boost, planet fling, whip
+
+**Predictive Trajectory Path**:
+A forward-propagated numerical N-body symplectic path preview projecting the future position, gravitational deflection, and periapsis encounter distances of a spacecraft.
+_Avoid_: Future line, guide curve, ghost path
+
+### Astrobiology & Planetary Atmospheres
+
+**Circumstellar Habitable Zone (Goldilocks Zone)**:
+The annular orbital corridor surrounding a luminous star where stellar flux maintains surface temperatures compatible with liquid surface water ($r \propto \sqrt{L}$).
+_Avoid_: Green zone, life ring, sweet spot
+
+**Runaway Greenhouse Limit**:
+The inner radial boundary of the Habitable Zone inside which excessive stellar insolation triggers catastrophic ocean evaporation and dense thermal runaway.
+_Avoid_: Heat border, inner burn line
+
+**Maximum Greenhouse Limit**:
+The outer radial boundary of the Habitable Zone outside which ambient temperatures fall below the freezing point of water and $CO_2$ condenses onto the surface.
+_Avoid_: Freeze line, frost limit, outer cold edge
+
+**Habitable Terrestrial Planet**:
+A terrestrial planet situated within the Circumstellar Habitable Zone, characterized by liquid ocean specular glint, fractal continental biomes, rotating cloud swirls, and Rayleigh scattering atmospheric limb glow.
+_Avoid_: Earth-like dot, green planet, life rock
+
+

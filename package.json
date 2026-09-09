@@ -1,0 +1,25 @@
+{
+  "name": "event-horizon",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "Event Horizon — N-Body Gravitational Physics Laboratory & Astrodynamics Flight Simulator",
+  "scripts": {
+    "test": "node --test",
+    "test:e2e": "playwright test",
+    "test:load": "ulimit -n 4096 2>/dev/null || true; node test/load-test.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "n-body",
+    "gravity",
+    "physics",
+    "simulation",
+    "canvas",
+    "orbital-mechanics"
+  ],
+  "author": "Deepmind AI & Suraj Patel",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  }
+}

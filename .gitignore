@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Test & E2E test runs
+test-results/
+playwright-report/
+blob-report/
+
+# OS & Logs
+.DS_Store
+*.log
+.env
+.env.*
+.scratch/
