@@ -143,6 +143,9 @@ STELLAR MODEL: G2V MAIN SEQUENCE // LUMINOSITY: L = M³.5 // HABITABLE CORRIDOR:
 
 Inspired by Swiss horological precision and aerospace flight directors, Event Horizon features the **Meridian Chronometer**—a lossless, zero-allocation temporal scrubbing system.
 
+> [!NOTE]
+> 📖 **Comprehensive Specification & Architectural Guide**: For mathematical proofs of Liouville phase-space preservation, API references, and standalone integration blueprints, see the dedicated [**Meridian Chronometer Whitepaper**](docs/MERIDIAN_CHRONOMETER.md).
+
 <br/>
 
 <p align="center">

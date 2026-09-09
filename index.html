@@ -51,10 +51,11 @@
       <button id="btn-play" class="btn-icon active" title="Play/Pause (Space)">⏸ Pause</button>
       <button id="btn-step" class="btn-icon" title="Step 1 Frame">⏯ Step</button>
       
-      <!-- Time Ring Buffer Scrubbing -->
-      <div class="scrub-group" title="Scrub back and forth through recorded physics states">
-        <label for="slider-scrub" class="control-label">HISTORY: <span id="scrub-val" class="tnum">0/0</span></label>
-        <input type="range" id="slider-scrub" min="0" max="0" value="0" class="glass-slider scrub-slider">
+      <!-- Meridian Chronometer: Swiss Horology Temporal Scrubbing -->
+      <div class="scrub-group meridian-chrono-wrap" title="Meridian Chronometer: Swiss horology zero-loss temporal scrubbing">
+        <span class="chrono-tag"><span class="chrono-dot"></span>CHRONO</span>
+        <label for="slider-scrub" class="control-label">RING: <span id="scrub-val" class="tnum">0/0</span></label>
+        <input type="range" id="slider-scrub" min="0" max="0" value="0" class="glass-slider scrub-slider chrono-slider">
       </div>
 
       <div class="speed-control">

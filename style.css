@@ -643,7 +643,7 @@ body, html {
   }
 }
 
-/* Time Ring Buffer Scrub Group */
+/* Meridian Chronometer Horological Scrubbing Component */
 .scrub-group {
   display: flex;
   align-items: center;
@@ -654,13 +654,66 @@ body, html {
   border-radius: 6px;
 }
 
+.meridian-chrono-wrap {
+  position: relative;
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.09) 0%, rgba(6, 12, 24, 0.85) 100%);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.meridian-chrono-wrap:hover {
+  border-color: rgba(0, 229, 255, 0.8);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.chrono-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: #00e5ff;
+  letter-spacing: 1px;
+  background: rgba(0, 229, 255, 0.12);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+}
+
+.chrono-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 6px #10b981;
+  animation: chrono-pulse 2s infinite ease-in-out;
+}
+
+@keyframes chrono-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.85); }
+}
+
 .scrub-slider {
   width: 85px;
+}
+
+.chrono-slider {
+  width: 95px;
+  accent-color: #00e5ff;
 }
 
 .scrub-slider::-webkit-slider-thumb {
   background: #00ffb4;
   box-shadow: 0 0 8px #00ffb4;
+}
+
+.chrono-slider::-webkit-slider-thumb {
+  background: #00e5ff;
+  box-shadow: 0 0 10px #00e5ff;
+  border: 1px solid #ffffff;
 }
 
 .tnum {
