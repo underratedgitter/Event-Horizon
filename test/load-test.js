@@ -1,5 +1,20 @@
 import http from 'node:http';
 import { performance, monitorEventLoopDelay } from 'node:perf_hooks';
+import { createServer } from '../server.js';
+
+function checkServerListening(host, port) {
+  return new Promise((resolve) => {
+    const req = http.get({ host, port, path: '/', timeout: 1000 }, (res) => {
+      res.resume();
+      resolve(true);
+    });
+    req.on('error', () => resolve(false));
+    req.on('timeout', () => {
+      req.destroy();
+      resolve(false);
+    });
+  });
+}
 
 const CONCURRENCY = parseInt(process.env.CONCURRENCY || '1000', 10);
 const DURATION_SEC = parseInt(process.env.DURATION || '6', 10);
@@ -105,6 +120,22 @@ async function runLoadTest() {
   console.log(`   Concurrency: ${CONCURRENCY} concurrent keep-alive users`);
   console.log(`   Target Duration: ${DURATION_SEC} seconds`);
   console.log('='.repeat(70));
+
+  let inProcessServer = null;
+  const isRunning = await checkServerListening(HOST, PORT);
+  if (!isRunning) {
+    console.log(`📡 No external server detected on http://${HOST}:${PORT}. Launching in-process static server...`);
+    inProcessServer = createServer();
+    await new Promise((resolve) => inProcessServer.listen(PORT, HOST, resolve));
+    // Warm up the server
+    await new Promise((resolve) => {
+      http.get(`http://${HOST}:${PORT}/`, (res) => {
+        res.resume();
+        resolve();
+      }).on('error', () => resolve());
+    });
+    console.log(`✅ In-process server listening on http://${HOST}:${PORT}`);
+  }
 
   // Initialize event loop lag monitor
   const loopMonitor = monitorEventLoopDelay({ resolution: 20 });
@@ -223,6 +254,11 @@ async function runLoadTest() {
   console.log(`   • Peak RSS Memory     : ${(peakRss / (1024 * 1024)).toFixed(2)} MB`);
   console.log(`   • Final RSS Memory    : ${(memFinal.rss / (1024 * 1024)).toFixed(2)} MB`);
   console.log('='.repeat(70));
+
+  if (inProcessServer) {
+    await new Promise((resolve) => inProcessServer.close(resolve));
+    console.log('🛑 In-process server closed cleanly.\n');
+  }
 
   if (errorCount > 0) {
     console.error('⚠️ Errors encountered during test:', errorDetails);

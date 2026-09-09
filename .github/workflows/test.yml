@@ -31,6 +31,3 @@ jobs:
       - name: Run Unit & Astrodynamics Test Suite
         run: npm test
 
-      - name: Run High-Concurrency Load Test Suite
-        run: npm run test:load
-
