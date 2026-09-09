@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use Event Horizon in academic research, educational curriculum, or orbital mechanics projects, please cite it as below."
+authors:
+  - family-names: Patel
+    given-names: Suraj
+title: "Event Horizon: High-Performance N-Body Gravitational Physics Laboratory & Astrodynamics Flight Simulator"
+version: 2.0.0
+date-released: 2026-09-09
+url: "https://github.com/underratedgitter/Event-Horizon"
+keywords:
+  - astrophysics
+  - n-body simulation
+  - orbital mechanics
+  - general relativity
+  - astrodynamics
+  - canvas-2d
+  - web-audio-api
+license: MIT

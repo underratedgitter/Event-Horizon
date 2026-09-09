@@ -6,7 +6,7 @@
 
 [![Node.js CI](https://img.shields.io/badge/Node.js-%3E%3D18.0.0-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Tests Passing](https://img.shields.io/badge/Tests-95%2F95%20Passing-00e5ff?style=for-the-badge&logo=vitest&logoColor=white)](test/)
-[![Throughput](https://img.shields.io/badge/Throughput-8%2C032%20RPS-f59e0b?style=for-the-badge&logo=speedtest&logoColor=white)](#-production-benchmarks--load-test)
+[![Throughput](https://img.shields.io/badge/Throughput-8%2C032%20RPS-f59e0b?style=for-the-badge&logo=speedtest&logoColor=white)](#-production-load-test-scorecard)
 [![Runtime Dependencies](https://img.shields.io/badge/Dependencies-0%20Zero-10b981?style=for-the-badge)](package.json)
 [![Canvas Engine](https://img.shields.io/badge/Canvas%202D-60%20FPS%20Retina-ec4899?style=for-the-badge&logo=html5&logoColor=white)](#)
 [![Web Audio](https://img.shields.io/badge/Audio-Web%20Audio%20API-a855f7?style=for-the-badge&logo=audacity&logoColor=white)](#)
@@ -14,12 +14,14 @@
 
 <br/>
 
-<a href="#-interactive-showcase-features">
-  <img src="docs/assets/event-horizon-hero.png" alt="Event Horizon Interface Preview" width="100%" style="border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); border: 1px solid rgba(0,229,255,0.3);" />
+<a href="#-deep-dive-features">
+  <img src="docs/assets/event-horizon-hero.png" alt="Event Horizon Interface Preview" width="100%" style="border-radius: 14px; box-shadow: 0 24px 64px rgba(0,0,0,0.85); border: 1px solid rgba(0,229,255,0.35);" />
 </a>
 
+<br/><br/>
+
 <p align="center">
-  <b><a href="#-interactive-showcase-features">Features</a></b> •
+  <b><a href="#-deep-dive-features">Key Capabilities</a></b> •
   <b><a href="#-flight-simulator--keyboard-controls">Flight Controls</a></b> •
   <b><a href="#-theoretical-astrophysics--mathematics">Theoretical Physics</a></b> •
   <b><a href="#-system-architecture">Architecture</a></b> •
@@ -33,31 +35,49 @@
 
 ## 🔭 Executive Overview
 
-**Event Horizon** is an ultra-performant, zero-dependency browser-native astrophysics simulation laboratory and astrodynamic flight simulator. Engineered with mathematical rigor and Matt Pocock software engineering discipline, it combines:
+**Event Horizon** is an ultra-performant, zero-dependency browser-native astrophysics laboratory and aerospace flight simulator. Engineered with mathematical rigor and Matt Pocock software engineering discipline, it fuses:
 
-- **Symplectic Velocity Verlet N-Body Integration** ($O(N^2)$ pairwise gravity with collision shockwaves and tidal Roche disruption).
-- **General Relativistic Physics**: Post-Newtonian orbital perihelion precession, relativistic pulsars with synchrotron radiation jets, and Doppler-beamed accretion disks around Schwarzschild black holes.
-- **Spacecraft Flight Simulator**: Pilotable *Odyssey Probe* with real-time $\Delta v$ propellant tracking, forward predictive N-body trajectory propagation, and gravitational slingshot visualizers.
-- **Circumstellar Habitable Zones**: Stellar luminosity calculation with dynamic Goldilocks boundaries, atmospheric Rayleigh scattering, and planetary climate classification.
-- **Swiss Horology HUD**: Precision optical reticle brackets, vector telemetry cards, picture-in-picture orbital radar with Lagrange points ($L_1-L_5$), and a lossless 300-state temporal scrubbing ring buffer.
-- **Production-Hardened Static Server**: Built-in Node.js server delivering **8,032 requests/sec** with zero-disk I/O RAM caching, gzip compression, ETag validation, and comprehensive CSP security headers.
+- **Symplectic Velocity Verlet N-Body Gravitational Physics** ($O(N^2)$ pairwise gravity with momentum-conserving inelastic mergers and tidal Roche disruption).
+- **General Relativistic Mechanics**: Post-Newtonian orbital perihelion precession, millisecond pulsars with relativistic synchrotron jets, and Schwarzschild black holes with differential Doppler-beamed accretion disks.
+- **Odyssey Spacecraft Simulator**: Player-pilotable probe with real-time $\Delta v$ propellant budgets, forward predictive N-body trajectory propagation, and gravitational slingshot visualizers.
+- **Circumstellar Habitable Zones**: Stellar luminosity flux equations calculating Goldilocks boundaries, atmospheric Rayleigh twilight scattering, and planetary climate classifications.
+- **Swiss Horology Telemetry HUD**: Aerospace optical reticle corner brackets, vector telemetry cards, picture-in-picture orbital radar with all five Lagrange points ($L_1-L_5$), and a lossless 300-state temporal scrubbing ring buffer.
+- **Production-Hardened Static Server**: Built-in Node.js server pushing **8,032 requests/second** with zero-disk I/O RAM caching, pre-compressed gzip streams, ETag validation, and comprehensive CSP security headers.
+
+> [!TIP]
+> **Zero External Runtime Dependencies**: Built entirely with native ES6+ modules, HTML5 Canvas 2D with Retina DPR scaling, and the procedural Web Audio API.
 
 ---
 
-## 🚀 Interactive Showcase Features
+## 🌟 Deep-Dive Features
 
-| Feature | Description | Mathematical / Astrodynamic Seam |
-| :--- | :--- | :--- |
-| **🚀 Spacecraft Flight Simulator** | Player-controlled probe with thruster exhaust physics, Delta-v fuel depletion, and refueling. | $m \frac{d\vec{v}}{dt} = \vec{F}_{thrust} + \sum \vec{F}_{grav}$, $\Delta v = I_{sp} g_0 \ln(m_0/m_f)$ |
-| **🌀 Forward Predictive Slingshots** | Multi-segment forward trajectory path forecasting planetary gravitational assists and periapsis boost. | Forward symplectic Euler/Verlet lookahead with moving attractor projection |
-| **💥 Supernova Core-Collapse** | Critical-mass or manual star collapse generating an expanding relativistic plasma blast wave. | Radiation pressure wave $P_{rad} \propto r^{-2}$, vaporizing micro-debris |
-| **🕳️ Relativistic Black Holes** | Accretion disk with differential Keplerian shearing, Doppler beaming gradient, and photon ring ($1.5 r_s$). | Doppler flux $\delta = \gamma^{-1}(1 - \beta \cos\theta)^{-1}$, $I_{obs} = I_0 \delta^3$ |
-| **⚡ Synchrotron Jet Pulsars** | Magnetized neutron star emitting high-velocity particle beams, lighthouse flash pulses, and synchrotron emission. | Magnetic dipole axis rotation with relativistic particle acceleration |
-| **🌱 Circumstellar Habitable Zones** | Goldilocks boundaries around stars computing runaway greenhouse and maximum greenhouse limits. | $r_{in} = \sqrt{L / 1.1}$, $r_{mid} = \sqrt{L}$, $r_{out} = \sqrt{L / 0.53}$ AU |
-| **🕸️ Spacetime Curvature Grid** | 2D coordinate lattice visualizing gravitational potential wells $\Phi(\vec{x})$ sagging and warping dynamically. | $\Phi(\vec{x}) = -\sum \frac{G M_i}{\sqrt{\|\vec{x} - \vec{p}_i\|^2 + \epsilon^2}}$ |
-| **⏱️ Lossless Time Scrubbing** | Bidirectional temporal scrubber with frame-by-frame stepping without physical state drift. | 300-state cyclic ring buffer with deep vector snapshotting |
-| **📡 Picture-in-Picture Radar** | Macro mini-map radar overlay rendering sweep beam, active bodies, viewport frustum, and Lagrange points. | Collinear & triangular Lagrange equilibrium solutions ($L_1, L_2, L_3, L_4, L_5$) |
-| **🎛️ Cosmic Audio Synthesizer** | Interactive audio console adjusting sub-bass resonance, stellar radio crackle, and collision impact booms. | Real-time Web Audio API filter cutoff, Q-factor, and white-noise generators |
+### 🚀 1. Spacecraft Flight Simulator & Gravitational Slingshots
+- **Propellant Economics**: Real-time Delta-v ($\Delta v$) tracking based on the Tsiolkovsky rocket equation.
+- **Forward Predictive Trajectory**: Multi-step forward symplectic propagator forecasting gravitational assists around massive planets, periapsis speed boosts, and escape trajectories.
+- **Flight Director HUD**: Real-time altitude, orbital eccentricity, velocity vector heading, and refuel controls.
+
+### 💥 2. Supernova Core-Collapse & Stellar Remnant Physics
+- **Catastrophic Core-Collapse**: Triggered manually or automatically when any star exceeds critical mass via accretion or collision.
+- **Relativistic Blast Wave**: Rapidly expanding plasma shockwave exerting radiation pressure ($P_{rad} \propto r^{-2}$) that pushes bodies and vaporizes micro-debris.
+- **Remnant Transformation**: Automatically collapses the progenitor core into either a high-frequency synchrotron **Pulsar** or a **Schwarzschild Black Hole** depending on residual mass.
+
+### 🕳️ 3. Relativistic Black Holes & Doppler Accretion Disks
+- **Keplerian Velocity Shearing**: Differential rotation speed ($v \propto r^{-1/2}$) across logarithmic spiral density wave perturbations.
+- **Relativistic Doppler Beaming**: Intense flux amplification on the approaching limb and dimming on the receding limb ($\delta = \gamma^{-1}(1 - \beta \cos\theta)^{-1}$).
+- **Photon Sphere Ring**: Exact visual rendering of the relativistic photon instability ring at $r_{ph} = 1.5 r_s$.
+
+### 🌱 4. Circumstellar Habitable Zones & Astrobiology Corridors
+- **Luminosity Scaling**: Dynamically computes runaway greenhouse limits, optimal Earth-flux midlines, and maximum greenhouse boundaries based on stellar luminosity ($L = M^{3.5}$).
+- **Planetary Climate Classification**: Real-time astrobiological scoring categorizing bodies as *Infernal*, *Temperate* (water-supporting Goldilocks), or *Cryogenic*.
+
+### ⏱️ 5. Temporal Rewind & Lossless State Scrubbing
+- **300-Frame Ring Buffer**: Continuous circular buffer recording high-precision position, velocity, and mass vectors.
+- **Bidirectional Time Travel**: Scrub backwards in time, step frame-by-frame, or replay cosmic collisions with 100% numerical fidelity.
+
+### 🎛️ 6. Procedural Web Audio Synthesizer Console
+- **Dual-Oscillator Ambient Resonance**: Sub-bass cosmic drone with adjustable cutoff frequencies and resonance Q-factors.
+- **Stellar Radio Crackle**: Procedural white-noise generator simulating interstellar cosmic microwave background radiation.
+- **Impact Detonations**: Exponential frequency-decay oscillators synthesizing deep physical collision booms.
 
 ---
 
@@ -79,7 +99,7 @@ To model Einsteinian orbital precession (e.g., Mercury's perihelion advance), a 
 
 $$\vec{a}_{total} = -\frac{G M}{r^3}\vec{r} - \frac{3 G M L^2}{c^2 r^5}\vec{r}$$
 
-This induces an authentic advance of the line of apsides per orbital period:
+This causes an authentic advance of the line of apsides per orbital period:
 
 $$\Delta \varpi \approx \frac{6 \pi G M}{c^2 a (1 - e^2)}$$
 
@@ -178,30 +198,18 @@ flowchart TD
 
 ## ⚡ Production Benchmarks & Load Test
 
-An automated high-concurrency load test ([`test/load-test.js`](test/load-test.js)) tests **1,000 concurrent keep-alive users** requesting HTML, CSS, and ES6 modules:
+An automated high-concurrency stress test ([`test/load-test.js`](test/load-test.js)) tests **1,000 concurrent keep-alive users** requesting HTML, CSS, and ES6 modules:
 
-```
-======================================================================
-🚀 EVENT HORIZON - HIGH-CONCURRENCY LOAD & STRESS TEST
-   Target: http://127.0.0.1:8080
-   Concurrency: 1,000 concurrent keep-alive users
-======================================================================
-Total Completed Requests : 48,794 requests in 6.07 seconds
-Throughput (RPS)         : 8,032 req/sec
-Error / Drop Rate        : 0.00% (0 errors across 48,794 requests)
-Payload Transferred      : 396.40 MB (gzip compressed, 81% reduction)
-----------------------------------------------------------------------
-Client Latency Distribution:
-   • p50 (Median)        : 116.60 ms
-   • p90                 : 147.81 ms
-   • p95                 : 160.43 ms
-   • p99                 : 232.18 ms
-Node.js Health & Memory:
-   • Event Loop Lag Mean : 115.41 ms
-   • Peak RSS Memory     : 290.16 MB
-======================================================================
-✅ 100% PRODUCTION READY: 0.00% Error Rate under 1,000 Concurrent Users
-```
+| Benchmark Metric | Measured Result | Production Target | Status |
+| :--- | :--- | :--- | :--- |
+| **Concurrent Users** | **1,000 Virtual Users** | 1,000 Users | 🟢 PASS |
+| **Throughput (RPS)** | **8,032 req/sec** | > 2,000 req/sec | 🟢 400% of Target |
+| **Completed Requests** | **48,794 requests** in 6.07s | > 10,000 requests | 🟢 PASS |
+| **Error / Drop Rate** | **0.00%** (0 / 48,794) | 0.00% | 🟢 ZERO DROP |
+| **Latency p50 (Median)** | **116.60 ms** | < 250 ms | 🟢 OPTIMAL |
+| **Latency p95** | **160.43 ms** | < 400 ms | 🟢 OPTIMAL |
+| **Payload Optimization** | **81% Bandwidth Saved** | > 50% | 🟢 GZIP STREAM |
+| **Node.js Peak Memory** | **290.16 MB** | < 512 MB | 🟢 BOUNDED |
 
 ---
 
@@ -214,8 +222,8 @@ Node.js Health & Memory:
 ### 1. Clone & Run (Zero Dependencies)
 ```bash
 # Clone the repository
-git clone https://github.com/underratedgitter/event-horizon.git
-cd event-horizon
+git clone https://github.com/underratedgitter/Event-Horizon.git
+cd Event-Horizon
 
 # Start the high-concurrency hardened HTTP server
 npm start
@@ -240,10 +248,11 @@ npm run test:e2e
 ## 📁 Repository Structure
 
 ```
-event-horizon/
+Event-Horizon/
 ├── .github/
 │   ├── workflows/test.yml          # GitHub Actions CI matrix (Node 18, 20, 22)
-│   └── ISSUE_TEMPLATE/             # Bug report & feature request templates
+│   ├── ISSUE_TEMPLATE/             # Bug report & feature request templates
+│   └── PULL_REQUEST_TEMPLATE.md    # Code review & quality checklist
 ├── docs/
 │   ├── assets/                     # High-resolution screenshots & UI previews
 │   ├── adr/                        # Architecture Decision Records
@@ -288,13 +297,18 @@ event-horizon/
 ├── server.js                       # Production in-memory static server (8,000+ RPS)
 ├── style.css                       # Swiss horology aerospace HUD stylesheet
 ├── package.json                    # Package metadata & test scripts
+├── CONTRIBUTING.md                 # Contribution guidelines & coding discipline
+├── SECURITY.md                     # Security policy & defense architecture
+├── CITATION.cff                    # Citation metadata for researchers
 └── LICENSE                         # MIT License
 ```
 
 ---
 
-## 📄 License
+## 📄 License & Citation
 
 Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
+
+If using Event Horizon for research, education, or software benchmarks, please cite via [`CITATION.cff`](CITATION.cff).
 
 Developed with 🌌 by Deepmind AI & Suraj Patel.
