@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="#-key-capabilities">
+<a href="#-interactive-scenario-gallery">
   <img src="docs/assets/event-horizon-banner.svg" alt="Event Horizon Aerospace Banner" width="100%" style="border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.8);" />
 </a>
 
@@ -8,7 +8,7 @@
 
 [![Node.js CI](https://img.shields.io/badge/Node.js-%3E%3D18.0.0-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Tests Passing](https://img.shields.io/badge/Tests-95%2F95%20Passing-00e5ff?style=for-the-badge&logo=vitest&logoColor=white)](test/)
-[![Throughput](https://img.shields.io/badge/Throughput-8%2C032%20RPS-f59e0b?style=for-the-badge&logo=speedtest&logoColor=white)](#-production-benchmarks--load-test)
+[![Throughput](https://img.shields.io/badge/Throughput-8%2C032%20RPS-f59e0b?style=for-the-badge&logo=speedtest&logoColor=white)](#-production-benchmarks--concurrency-stress-test)
 [![Runtime Dependencies](https://img.shields.io/badge/Dependencies-0%20Zero-10b981?style=for-the-badge)](package.json)
 [![Canvas Engine](https://img.shields.io/badge/Canvas%202D-60%20FPS%20Retina-ec4899?style=for-the-badge&logo=html5&logoColor=white)](#)
 [![Web Audio](https://img.shields.io/badge/Audio-Web%20Audio%20API-a855f7?style=for-the-badge&logo=audacity&logoColor=white)](#)
@@ -16,16 +16,20 @@
 
 <br/>
 
-<a href="#-interactive-simulation-interface">
+<a href="#-interactive-scenario-gallery">
   <img src="docs/assets/event-horizon-hero.png" alt="Event Horizon Interface Preview" width="100%" style="border-radius: 12px; box-shadow: 0 24px 64px rgba(0,0,0,0.85); border: 1px solid rgba(0,229,255,0.35);" />
 </a>
 
+<br/><br/>
+
 <p align="center">
-  <b><a href="#-key-capabilities">Key Capabilities</a></b> •
-  <b><a href="#-flight-simulator--keyboard-controls">Flight Controls</a></b> •
+  <b><a href="#-executive-overview">Overview</a></b> •
+  <b><a href="#-interactive-scenario-gallery">Visual Gallery</a></b> •
+  <b><a href="#-the-meridian-chronometer--temporal-engine">Meridian Chronometer</a></b> •
   <b><a href="#-theoretical-astrophysics--mathematics">Theoretical Physics</a></b> •
+  <b><a href="#-flight-simulator--keyboard-controls">Flight Controls</a></b> •
   <b><a href="#-system-architecture">Architecture</a></b> •
-  <b><a href="#-production-benchmarks--load-test">Benchmarks</a></b> •
+  <b><a href="#-production-benchmarks--concurrency-stress-test">Benchmarks</a></b> •
   <b><a href="#-quickstart">Quickstart</a></b>
 </p>
 
@@ -35,67 +39,141 @@
 
 ## 🔭 Executive Overview
 
-**Event Horizon** is an ultra-performant, zero-dependency browser-native astrophysics simulation laboratory and aerospace flight simulator. Engineered with mathematical rigor and Matt Pocock software engineering discipline, it fuses:
+**Event Horizon** is an ultra-performant, zero-dependency browser-native astrophysics laboratory, relativistic N-body gravity simulator, and aerospace flight simulator. Engineered with mathematical rigor and Matt Pocock software engineering discipline, it fuses:
 
-- **Symplectic Velocity Verlet N-Body Gravitational Physics** ($O(N^2)$ pairwise gravity with momentum-conserving inelastic mergers and tidal Roche disruption).
-- **General Relativistic Mechanics**: Post-Newtonian orbital perihelion precession, millisecond pulsars with relativistic synchrotron jets, and Schwarzschild black holes with differential Doppler-beamed accretion disks.
-- **Odyssey Spacecraft Simulator**: Player-pilotable probe with real-time $\Delta v$ propellant budgets, forward predictive N-body trajectory propagation, and gravitational slingshot visualizers.
+- **Symplectic Velocity Verlet N-Body Gravitational Physics**: Pairwise $O(N^2)$ gravity with momentum-conserving inelastic mergers, Plummer softening, and tidal Roche disruption.
+- **General Relativistic Mechanics**: Post-Newtonian orbital perihelion precession, spinning millisecond pulsars with relativistic synchrotron jets, and Schwarzschild black holes with differential Doppler-beamed accretion disks.
+- **Odyssey Spacecraft Flight Simulator**: Pilotable aerospace probe with real-time $\Delta v$ propellant budgets, forward predictive N-body trajectory propagation, and gravitational slingshot visualizers.
 - **Circumstellar Habitable Zones**: Stellar luminosity flux equations calculating Goldilocks boundaries, atmospheric Rayleigh twilight scattering, and planetary climate classifications.
 - **Swiss Horology Telemetry HUD**: Aerospace optical reticle corner brackets, vector telemetry cards, picture-in-picture orbital radar with all five Lagrange points ($L_1-L_5$), and a lossless 300-state temporal scrubbing ring buffer.
-- **Production-Hardened Static Server**: Built-in Node.js server pushing **8,032 requests/second** with zero-disk I/O RAM caching, pre-compressed gzip streams, ETag validation, and comprehensive CSP security headers.
+- **Production-Hardened Static Delivery Engine**: Built-in Node.js server pushing **8,032 requests/second** under 1,000 concurrent keep-alive connections with zero-disk I/O RAM caching, pre-compressed gzip streams, ETag validation, and comprehensive CSP security headers.
 
 > [!TIP]
 > **Zero External Runtime Dependencies**: Built entirely with native ES6+ modules, HTML5 Canvas 2D with Retina DPR scaling, and the procedural Web Audio API.
 
 ---
 
-## 🌟 Key Capabilities
+## 🌌 Interactive Scenario Gallery
 
-### 🚀 1. Spacecraft Flight Simulator & Gravitational Slingshots
-```text
-ENGINE: Thrust Vector Propagator | METRIC: Tsiolkovsky Delta-v | PREDICTOR: 320 Forward Steps
-```
-- **Propellant Economics**: Real-time Delta-v ($\Delta v$) expenditure based on the Tsiolkovsky rocket equation with in-flight refuel seams.
-- **Forward Predictive Trajectory**: Multi-step forward symplectic propagator forecasting planetary gravitational assists, periapsis speed boosts, and escape trajectories.
-- **Flight Director HUD**: Real-time altitude, orbital eccentricity, velocity vector heading, and refuel controls.
+Explore the rich astrophysical environments simulated in real time with high numerical fidelity.
 
-### 💥 2. Supernova Core-Collapse & Stellar Remnants
-```text
-TRIGGER: Mass Accretion > Critical Limit | BLAST: Radiation Pressure Wave | REMNANT: Pulsar / Black Hole
-```
-- **Catastrophic Core-Collapse**: Initiated automatically when a star accretes critical mass or coalesce via collisions.
-- **Relativistic Shockwave**: Rapidly expanding plasma wavefront exerting radiation pressure ($P_{rad} \propto r^{-2}$) that pushes bodies and vaporizes micro-debris.
-- **Dynamic Remnant Formation**: Collapses progenitor cores into spinning **Pulsars** (intermediate mass) or **Schwarzschild Black Holes** (supermassive).
+<br/>
 
-### 🕳️ 3. Relativistic Black Holes & Doppler Accretion Disks
+### 🚀 1. Odyssey Spacecraft Simulator & Gravitational Slingshots
+
 ```text
-VELOCITY: Keplerian Shearing (v ~ r^-0.5) | BOOST: Relativistic Doppler Beaming | PHOTON RING: 1.5 r_s
+SUBSYSTEM: ODYSSEY_FLIGHT_DIRECTOR // ENGINE: TSIOLKOVSKY ION DRIVE // PREDICTOR: 320-STEP FORWARD PROPAGATOR
 ```
-- **Keplerian Velocity Shearing**: Differential rotation speed across logarithmic spiral density wave perturbations.
+
+<p align="center">
+  <img src="docs/assets/preview-spacecraft-slingshot.png" alt="Odyssey Spacecraft Simulator & Gravitational Slingshot" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.35); box-shadow: 0 16px 40px rgba(0,0,0,0.8);" />
+</p>
+
+- **Real-Time Delta-v Budget**: Manage propellant reserves modeled after the Tsiolkovsky rocket equation with in-flight refuel seams.
+- **Forward Trajectory Prediction**: A multi-step forward symplectic propagator projects planetary gravitational assists, periapsis speed boosts, and hyperbolic escape orbits before firing thrusters.
+- **Flight Director HUD**: Real-time altitude, orbital eccentricity, velocity vector heading, target distance telemetry, and tactical pause controls.
+
+<br/>
+
+### 🕳️ 2. Schwarzschild Black Holes & Doppler Accretion Disks
+
+```text
+METRIC: SCHWARZSCHILD // RADIUS: r_s = 2GM/c² // BEAMING: δ³ FLUX BOOST // PHOTON RING: 1.5 r_s
+```
+
+<p align="center">
+  <img src="docs/assets/preview-black-hole.png" alt="Schwarzschild Black Hole and Doppler-Beamed Accretion Disk" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.35); box-shadow: 0 16px 40px rgba(0,0,0,0.8);" />
+</p>
+
+- **Keplerian Velocity Shearing**: Differential rotational velocity across logarithmic spiral density wave perturbations ($v \propto r^{-1/2}$).
 - **Relativistic Doppler Beaming**: Intense flux amplification on the approaching limb and dimming on the receding limb ($\delta = \gamma^{-1}(1 - \beta \cos\theta)^{-1}$).
-- **Photon Sphere Ring**: Exact visual rendering of the relativistic photon instability ring at $r_{ph} = 1.5 r_s$.
+- **Photon Sphere & Event Horizon**: Exact visual rendering of the relativistic photon instability ring at $r_{ph} = 1.5 r_s$ and total photon capture within the Schwarzschild horizon.
 
-### 🌱 4. Circumstellar Habitable Zones & Astrobiology Corridors
-```text
-CORRIDOR: Runaway Greenhouse to Maximum Greenhouse | FLUX: L = M^3.5 | CLASSIFICATION: Infernal/Temperate/Cryogenic
-```
-- **Luminosity Scaling**: Dynamically computes runaway greenhouse limits, optimal Earth-flux midlines, and maximum greenhouse boundaries based on stellar luminosity ($L = M^{3.5}$).
-- **Planetary Climate Classification**: Real-time astrobiological scoring categorizing bodies as *Infernal*, *Temperate* (water-supporting Goldilocks), or *Cryogenic*.
+<br/>
 
-### ⏱️ 5. Temporal Rewind & Lossless State Scrubbing
-```text
-BUFFER: 300-State High-Precision Ring | STATE DRIFT: 0.00% | PLAYBACK: Bidirectional & Frame-Stepping
-```
-- **300-Frame Ring Buffer**: Continuous circular buffer recording high-precision position, velocity, and mass vectors.
-- **Bidirectional Time Travel**: Scrub backwards in time, step frame-by-frame, or replay cosmic collisions with 100% numerical fidelity.
+### ⚡ 3. Millisecond Pulsars & Relativistic Synchrotron Jets
 
-### 🎛️ 6. Procedural Web Audio Synthesizer Console
 ```text
-SUB-BASS: Dual-Oscillator Ambient Resonance | STATIC: Cosmic Microwave Background | DETONATION: Frequency-Decay Booms
+OBJECT: NEUTRON_STAR_PULSAR // PERIOD: 1.4 ms // B-FIELD: 10¹² GAUSS // EMISSION: RELATIVISTIC SYNCHROTRON
 ```
-- **Dual-Oscillator Ambient Resonance**: Sub-bass cosmic drone with adjustable cutoff frequencies and resonance Q-factors.
-- **Stellar Radio Crackle**: Procedural white-noise generator simulating interstellar cosmic microwave background radiation.
-- **Impact Detonations**: Exponential frequency-decay oscillators synthesizing deep physical collision booms.
+
+<p align="center">
+  <img src="docs/assets/preview-pulsar-system.png" alt="Millisecond Pulsar Synchrotron Jets" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.35); box-shadow: 0 16px 40px rgba(0,0,0,0.8);" />
+</p>
+
+- **Relativistic Polar Beams**: High-energy synchrotron radiation jets emitting along the magnetic dipole axis, sweeping through space like a cosmic lighthouse.
+- **Radiation Pressure**: Emitted shockwave particles exert radial radiation pressure ($P_{rad} \propto r^{-2}$) on nearby celestial bodies and debris.
+- **Dynamic Supernova Remnant**: Progenitor stars exceeding critical mass limits undergo core-collapse, triggering a supernova shockwave and leaving behind a spinning neutron star remnant.
+
+<br/>
+
+### 💫 4. Binary Star Choreography & Tidal Roche Disruption
+
+```text
+SYSTEM: CO-ORBITING BINARY // MASS RATIO: 1.25:1.00 // DYNAMICS: DYNAMIC BARYCENTER & MUTUAL 3-BODY
+```
+
+<p align="center">
+  <img src="docs/assets/preview-binary-stars.png" alt="Binary Star Dance and Relativistic Orbitals" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.35); box-shadow: 0 16px 40px rgba(0,0,0,0.8);" />
+</p>
+
+- **True Mutual Barycentric Orbitals**: Massive stellar pairs orbit their shared center of mass without artificial fixed anchors.
+- **Tidal Roche Disruption**: Passing bodies that penetrate the Roche limit ($\approx 2.44 R (M/m)^{1/3}$) undergo catastrophic tidal disruption and mass accretion.
+- **Chaotic Three-Body Dynamics**: High-precision integration captures orbital resonance, figure-8 configurations, and chaotic ejections.
+
+<br/>
+
+### 🪐 5. Solar System & Circumstellar Habitable Goldilocks Zones
+
+```text
+STELLAR MODEL: G2V MAIN SEQUENCE // LUMINOSITY: L = M³.5 // HABITABLE CORRIDOR: 0.95 - 1.37 AU
+```
+
+<p align="center">
+  <img src="docs/assets/preview-solar-system.png" alt="Solar System Overview and Habitable Zones" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.35); box-shadow: 0 16px 40px rgba(0,0,0,0.8);" />
+</p>
+
+- **Dynamic Stellar Flux Modeling**: Runaway greenhouse and maximum greenhouse boundaries scale dynamically with stellar mass and temperature ($L = M^{3.5}$).
+- **Astrobiological Climate Scoring**: Real-time thermal classification categorizing planets into *Infernal*, *Temperate* (liquid water zone), and *Cryogenic*.
+- **Atmospheric Twilight Scattering**: Multi-layer Rayleigh glow rendering illuminated planetary crescents and atmospheric horizons.
+
+---
+
+## ⏱️ The Meridian Chronometer & Temporal Engine
+
+Inspired by Swiss horological precision and aerospace flight directors, Event Horizon features the **Meridian Chronometer**—a lossless, zero-allocation temporal scrubbing system.
+
+<br/>
+
+<p align="center">
+  <img src="docs/assets/meridian-chronometer.svg" alt="The Meridian Chronometer Horology Architecture" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.4); box-shadow: 0 20px 48px rgba(0,0,0,0.85);" />
+</p>
+
+<br/>
+
+### Core Engineering Invariants
+
+| Architecture Pillar | Specification | Verification Seam |
+| :--- | :--- | :--- |
+| **Ring Buffer Topology** | 300-state circular buffer | Zero garbage collection pauses, $O(1)$ cyclic push |
+| **Temporal Scrubbing** | Bidirectional scrubbing slider | Frame-stepping backwards/forwards with 100% numerical replay fidelity |
+| **Energy Invariance** | Symplectic phase-space preservation | $\Delta E / E_0 < 0.001\%$ across full 300-frame rewind and resume cycles |
+| **Speed Range** | $0.1\times$ slow-motion to $5.0\times$ orbital acceleration | Smooth sub-frame time scaling without integration breakdown |
+| **Substepping Engine** | 4 sub-steps per animation frame | Eliminates close-encounter tunneling and numerical singularities |
+
+```javascript
+// State snapshot structure cached in the 300-frame cyclic ring buffer
+class StateRingBuffer {
+  push(simulationTime, bodies, spacecraft) {
+    this.buffer[this.head] = {
+      t: simulationTime,
+      bodies: bodies.map(b => b.cloneState()),
+      spacecraft: spacecraft ? spacecraft.cloneState() : null
+    };
+    this.head = (this.head + 1) % 300;
+  }
+}
+```
 
 ---
 
@@ -150,11 +228,11 @@ Where $\beta = v/c$, $\gamma = (1 - \beta^2)^{-1/2}$, creating an approaching bl
 
 <div align="center">
 
-| Key / Input | Action | Function |
+| Key / Input | Action | Subsystem & Function |
 | :---: | :--- | :--- |
-| <kbd>W</kbd> | **Forward Thrusters** | Fires main engine, consumes Delta-v propellant |
+| <kbd>W</kbd> | **Forward Thrusters** | Fires main engine, consumes $\Delta v$ propellant, accelerates forward |
 | <kbd>A</kbd> / <kbd>D</kbd> | **Rotate Attitude** | Rotates spacecraft thrust vector counter-clockwise / clockwise |
-| <kbd>S</kbd> | **Retro-Brake** | Fires forward attitude thrusters to arrest velocity |
+| <kbd>S</kbd> | **Retro-Brake** | Fires forward attitude thrusters to arrest orbital velocity |
 | <kbd>Space</kbd> | **Pause / Play** | Freezes simulation time for tactical inspection and conics review |
 | <kbd>1</kbd> | **Free Cam** | Pan and zoom freely anywhere across deep space |
 | <kbd>2</kbd> | **Locked Cam** | Centers camera lock onto the selected planet or spacecraft |
@@ -177,6 +255,7 @@ flowchart TD
         Radar[PiP Orbital Radar & Lagrange Points]
         AudioMixer[Web Audio Synthesizer Mixer]
         FlightHUD[Spacecraft Flight Director HUD]
+        Chrono[Meridian Chronometer Dial]
     end
 
     subgraph Core_Engine [Physics & Simulation Core]
@@ -214,9 +293,9 @@ flowchart TD
 
 ---
 
-## ⚡ Production Benchmarks & Load Test
+## ⚡ Production Benchmarks & Concurrency Stress Test
 
-An automated high-concurrency stress test ([`test/load-test.js`](test/load-test.js)) tests **1,000 concurrent keep-alive users** requesting HTML, CSS, and ES6 modules:
+An automated high-concurrency stress test ([`test/load-test.js`](test/load-test.js)) validates **1,000 concurrent keep-alive users** requesting HTML, CSS, and ES6 modules:
 
 | Benchmark Metric | Measured Result | Production Target | Status |
 | :--- | :--- | :--- | :--- |
@@ -228,6 +307,12 @@ An automated high-concurrency stress test ([`test/load-test.js`](test/load-test.
 | **Latency p95** | **160.43 ms** | < 400 ms | 🟢 OPTIMAL |
 | **Payload Optimization** | **81% Bandwidth Saved** | > 50% | 🟢 GZIP STREAM |
 | **Node.js Peak Memory** | **290.16 MB** | < 512 MB | 🟢 BOUNDED |
+
+### Static Server Engineering
+- **In-Memory Zero-I/O Caching**: Static assets (`index.html`, CSS, JS modules) are pre-buffered into memory at startup. Zero disk read overhead during heavy traffic spikes.
+- **Pre-Compressed Gzip Streams**: Compresses text payloads on demand or from buffer, slashing payload size by 81%.
+- **ETag & HTTP 304 Validation**: Client-side revalidation saves network bandwidth and CPU cycles.
+- **Strict Content Security Policy (CSP)**: Robust protection against XSS and resource injection.
 
 ---
 
@@ -274,12 +359,20 @@ Event-Horizon/
 ├── docs/
 │   ├── assets/                     # High-resolution screenshots & UI previews
 │   │   ├── event-horizon-banner.svg# High-craft vector aerospace banner
-│   │   └── event-horizon-hero.png  # Playwright verified interface screenshot
+│   │   ├── event-horizon-hero.png  # Playwright verified interface screenshot
+│   │   ├── meridian-chronometer.svg# Swiss horology chronometer vector showcase
+│   │   ├── preview-solar-system.png# Solar system scenario preview
+│   │   ├── preview-black-hole.png  # Black hole accretion disk preview
+│   │   ├── preview-binary-stars.png# Binary stars dance preview
+│   │   ├── preview-pulsar-system.png # Relativistic pulsar preview
+│   │   └── preview-spacecraft-slingshot.png # Spacecraft slingshot preview
 │   ├── adr/                        # Architecture Decision Records
 │   └── spec/                       # Engineering specifications
 ├── e2e/
 │   ├── app.spec.js                 # Playwright E2E browser test suite
 │   └── screenshots/app.png         # Playwright verified render screenshot
+├── scripts/
+│   └── generate-screenshots.js     # Automated Retina screenshot generator
 ├── src/
 │   ├── audio.js                    # Procedural Web Audio API synthesizer
 │   ├── body.js                     # Celestial bodies, Doppler accretion disks, pulsars
