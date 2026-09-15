@@ -141,7 +141,7 @@ export function calculateOrbitalElements({ primary, body, G }) {
  * @returns {Object|null} The dominant attractor body
  */
 export function findDominantAttractor(body, bodies, G = 1.0) {
-  if (!body || !Array.isArray(bodies) || bodies.length <= 1) return null;
+  if (!body || !Array.isArray(bodies) || bodies.length === 0) return null;
   if (!Number.isFinite(body.position?.x) || !Number.isFinite(body.position?.y)) return null;
 
   let dominantBody = null;

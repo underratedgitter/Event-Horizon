@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Event Horizon — N-Body Gravity & Astrodynamics Simulator</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,6 +10,12 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <dialog id="scenario-gallery" aria-labelledby="gallery-title">
+    <div class="gallery-topline"><span>EVENT HORIZON / FIELD GUIDE</span><button id="btn-close-gallery" class="btn-close" aria-label="Close scenario gallery">✕</button></div>
+    <div class="gallery-heading"><div><p class="eyebrow">YOUR NEXT EXPERIMENT</p><h1 id="gallery-title">A universe of<br>possibilities.</h1></div><p>Choose a starting point. Change the conditions.<br>See where gravity takes you.</p></div>
+    <div id="scenario-cards" class="scenario-cards"></div>
+    <div class="gallery-footer"><span>Runs in your browser · No account needed</span><button id="btn-empty-sandbox" class="btn-action">Start with empty space →</button></div>
+  </dialog>
   <!-- Canvas Viewport -->
   <canvas id="sandbox-canvas"></canvas>
 
@@ -21,6 +27,8 @@
       <span class="badge-tag">N-BODY V2.0</span>
     </div>
 
+    <button id="btn-explore" class="btn-icon explore-button">Explore scenarios ↗</button>
+    <button id="btn-tools" class="btn-icon" aria-expanded="true" aria-controls="creation-tools">Tools</button>
     <!-- Scenarios -->
     <div class="control-group">
       <label for="preset-select" class="control-label">SCENARIO</label>
@@ -283,7 +291,7 @@
   <div id="toast-notification" class="toast hidden"></div>
 
   <!-- Left Sidebar: Tools & Body Creator -->
-  <aside class="hud-left">
+  <aside class="hud-left" id="creation-tools" aria-label="Creation tools">
     <div class="panel-section">
       <div class="section-title">TOOL MODE</div>
       <div class="btn-pill-group">
@@ -293,7 +301,13 @@
     </div>
 
     <div class="panel-section">
-      <div class="section-title">SPAWN BODY</div>
+      <div class="section-title">CREATE A BODY</div>
+      <div class="orbit-controls">
+        <label for="placement-mode">Placement</label>
+        <select id="placement-mode" class="glass-select"><option value="free">Free launch</option><option value="circular">Circular orbit</option></select>
+        <label class="orbit-direction"><input id="orbit-retrograde" type="checkbox"> Reverse orbit direction</label>
+        <p id="placement-hint">Drag on empty space to set launch velocity.</p>
+      </div>
       <div class="body-palette">
         <button class="type-btn active" data-type="planet">
           <span class="type-icon planet-icon"></span>
@@ -369,7 +383,23 @@
         <span id="insp-orbit-badge" class="badge-orbit">CIRCULAR</span>
       </div>
     </div>
+    <button id="btn-close-inspector" class="btn-close" aria-label="Close body inspector">✕</button>
     <div id="insp-name" class="insp-title">Earth</div>
+    <details class="body-editor" open>
+      <summary>Edit body</summary>
+      <form id="body-editor-form">
+        <label>Name<input id="edit-name" maxlength="60" required></label>
+        <div class="editor-grid">
+          <label>Mass<input id="edit-mass" type="number" min="0.01" max="1000000" step="any" required></label>
+          <label>Radius<input id="edit-radius" type="number" min="0.1" max="1000" step="any" required></label>
+          <label>Velocity X<input id="edit-vx" type="number" min="-10000" max="10000" step="any" required></label>
+          <label>Velocity Y<input id="edit-vy" type="number" min="-10000" max="10000" step="any" required></label>
+        </div>
+        <p>Values use simulation units. Applying changes clears this body’s trail.</p>
+        <button class="btn-action primary" type="submit">Apply changes</button>
+        <output id="edit-status" aria-live="polite"></output>
+      </form>
+    </details>
 
     <div class="insp-metrics">
       <div class="metric-row">

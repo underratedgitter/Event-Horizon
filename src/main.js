@@ -1,3 +1,4 @@
+import { initWorkspace } from './workspace.js';
 import { SimulationEngine } from './physics.js';
 import { Renderer } from './renderer.js';
 import { ParticleSystem } from './particles.js';
@@ -113,6 +114,8 @@ window.addEventListener('DOMContentLoaded', () => {
   if (!loadedFromUrl) {
     loadPreset('solarSystem');
   }
+
+  initWorkspace(ui);
 
   // Simulation Loop Variables
   let lastTime = performance.now();

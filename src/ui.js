@@ -594,6 +594,7 @@ export class UIController {
 
     // Keyboard shortcuts
     window.addEventListener('keydown', (e) => {
+      if (document.querySelector('dialog[open]') || e.target.closest('input, select, textarea, button, [contenteditable]')) return;
       // Flight Challenge Probe Thruster Controls (WASD / Arrows)
       if (this.missionManager && this.missionManager.getStatus() === 'active') {
         let thrust = null;
@@ -747,11 +748,11 @@ export class UIController {
 
       this.selectBody(newBody);
       if (this.audio) this.audio.init();
-
-      this.isDragging = false;
-      this.dragStartWorld = null;
-      this.currentWorldPos = null;
     }
+
+    this.isDragging = false;
+    this.dragStartWorld = null;
+    this.currentWorldPos = null;
   }
 
   handleWheel(e) {
@@ -849,6 +850,7 @@ export class UIController {
       this.selectedBody.isSelected = false;
     }
     this.selectedBody = body;
+    document.dispatchEvent(new CustomEvent('bodyselection', { detail: body }));
     if (body) {
       body.isSelected = true;
       if (body.type === 'spacecraft') {
@@ -953,6 +955,15 @@ export class UIController {
     }
 
     const template = this.bodyTemplates[this.activeTemplate] || this.bodyTemplates.planet;
+    if (document.getElementById('placement-mode')?.value === 'circular') {
+      const position = this.currentWorldPos;
+      const primary = findDominantAttractor({ id: '__placement__', position, mass: template.mass }, this.engine.getBodies(), this.engine.G);
+      if (!primary || Math.hypot(position.x - primary.position.x, position.y - primary.position.y) <= primary.radius + template.radius) return null;
+      const assist = calculateCircularVelocity(primary, position, this.engine.G);
+      if (!assist) return null;
+      const velocity = document.getElementById('orbit-retrograde').checked ? assist.retrogradeVelocity : assist.progradeVelocity;
+      return { start: position, current: position, velocity, rawVelocity: velocity, isSnapped: true, snapType: 'CIRCULAR ORBIT', circularAssist: assist, primaryAttractor: primary, config: template };
+    }
     const rawVx = (this.dragStartWorld.x - this.currentWorldPos.x) * 0.12;
     const rawVy = (this.dragStartWorld.y - this.currentWorldPos.y) * 0.12;
     const rawSpeed = Math.hypot(rawVx, rawVy);
