@@ -69,3 +69,10 @@ test('mobile gallery fits the viewport and creation tools collapse', async ({ pa
   await page.locator('[data-scenario="solarSystem"]').click();
   await expect(page.getByRole('dialog')).not.toBeVisible();
 });
+
+test('shortcuts keep working after clicking a toolbar button', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('#btn-tools').click();
+  await page.keyboard.press('Digit4');
+  expect(await page.evaluate(() => window.__cosmicSandbox.renderer.camera.mode)).toBe('barycenter');
+});

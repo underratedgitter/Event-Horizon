@@ -30,17 +30,23 @@ export function serializeScenario(engine) {
     })),
   };
 
-  const json = JSON.stringify(payload);
-  let base64;
-  if (typeof btoa === 'function') {
-    base64 = btoa(json);
-  } else if (typeof Buffer !== 'undefined') {
-    base64 = Buffer.from(json).toString('base64');
-  } else {
-    base64 = json;
-  }
+  return encodeURIComponent(encodeBase64Utf8(JSON.stringify(payload)));
+}
 
-  return encodeURIComponent(base64);
+// btoa/atob only accept Latin-1, so names with emoji or non-Latin scripts made
+// btoa throw. Text is routed through UTF-8 bytes instead; ASCII payloads encode
+// exactly as before, so existing share links still load.
+function encodeBase64Utf8(text) {
+  if (typeof btoa !== 'function') return Buffer.from(text, 'utf8').toString('base64');
+  let binary = '';
+  for (const byte of new TextEncoder().encode(text)) binary += String.fromCharCode(byte);
+  return btoa(binary);
+}
+
+function decodeBase64Utf8(base64) {
+  if (typeof atob !== 'function') return Buffer.from(base64, 'base64').toString('utf8');
+  const bytes = Uint8Array.from(atob(base64), (ch) => ch.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
 }
 
 const BLOCKED_PROPERTIES = new Set(['__proto__', 'constructor', 'prototype']);
@@ -86,15 +92,7 @@ export function deserializeScenario(input) {
     if (clean.length > MAX_PAYLOAD_LENGTH) return null;
 
     clean = decodeURIComponent(clean);
-    let jsonStr;
-
-    if (typeof atob === 'function') {
-      jsonStr = atob(clean);
-    } else if (typeof Buffer !== 'undefined') {
-      jsonStr = Buffer.from(clean, 'base64').toString('utf8');
-    } else {
-      jsonStr = clean;
-    }
+    const jsonStr = decodeBase64Utf8(clean);
 
     if (jsonStr.length > MAX_PAYLOAD_LENGTH) return null;
 

@@ -65,6 +65,15 @@ describe('Scenario State Serialization & URL Sharing', () => {
     assert.equal(restored.bodies[0].name, 'Solo');
   });
 
+  it('should round-trip body names outside Latin-1 (emoji, Devanagari)', () => {
+    const engine = new SimulationEngine({ G: 1.0 });
+    engine.addBody({ name: 'सूर्य ☀️', type: 'star', mass: 10, radius: 5 });
+
+    const restored = deserializeScenario(`#scenario=${serializeScenario(engine)}`);
+    assert.ok(restored);
+    assert.equal(restored.bodies[0].name, 'सूर्य ☀️');
+  });
+
   it('should return null safely when deserializing corrupted or invalid strings', () => {
     assert.equal(deserializeScenario(null), null);
     assert.equal(deserializeScenario(''), null);

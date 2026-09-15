@@ -292,10 +292,9 @@ export function handleRequest(req, res, rootDir, assetCache) {
  * gzip/deflate compression, and 304 Not Modified support.
  */
 function serveAsset(asset, req, res) {
-  const isHtml = asset.filePath.endsWith('.html') || asset.filePath.endsWith('.htm');
-  const cacheControl = isHtml
-    ? 'no-cache, must-revalidate'
-    : 'public, max-age=31536000, immutable';
+  // Asset filenames are not content-hashed, so a long "immutable" lifetime would pin
+  // browsers to stale JS/CSS after an edit. Revalidating via ETag stays cheap (304).
+  const cacheControl = 'no-cache, must-revalidate';
 
   const baseHeaders = {
     ...SECURITY_HEADERS,

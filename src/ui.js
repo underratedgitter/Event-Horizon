@@ -594,7 +594,11 @@ export class UIController {
 
     // Keyboard shortcuts
     window.addEventListener('keydown', (e) => {
-      if (document.querySelector('dialog[open]') || e.target.closest('input, select, textarea, button, [contenteditable]')) return;
+      if (document.querySelector('dialog[open]')) return;
+      const target = e.target instanceof Element ? e.target : null;
+      if (target?.closest('input, select, textarea, [contenteditable]')) return;
+      // A focused button already handles Space/Enter natively; other shortcuts must keep working after a click.
+      if (target?.closest('button') && (e.code === 'Space' || e.code === 'Enter' || e.code === 'NumpadEnter')) return;
       // Flight Challenge Probe Thruster Controls (WASD / Arrows)
       if (this.missionManager && this.missionManager.getStatus() === 'active') {
         let thrust = null;

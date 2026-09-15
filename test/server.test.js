@@ -197,7 +197,7 @@ describe('Production-Grade Static Server Defense & Security Hardening', () => {
       const cssRes = await request('/style.css');
       assert.equal(cssRes.statusCode, 200);
       assert.ok(cssRes.headers['etag']);
-      assert.equal(cssRes.headers['cache-control'], 'public, max-age=31536000, immutable');
+      assert.equal(cssRes.headers['cache-control'], 'no-cache, must-revalidate');
     });
 
     it('should return 304 Not Modified when If-None-Match matches ETag', async () => {
