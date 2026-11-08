@@ -12,3 +12,6 @@ blob-report/
 .env
 .env.*
 .scratch/
+
+# Local tool files
+.commandcode/
