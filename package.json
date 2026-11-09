@@ -20,6 +20,6 @@
   "author": "Deepmind AI & Suraj Patel",
   "license": "MIT",
   "devDependencies": {
-    "@playwright/test": "^1.63.0"
+    "@playwright/test": "^1.65.0"
   }
 }
