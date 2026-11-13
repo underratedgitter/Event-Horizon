@@ -7,7 +7,7 @@
 <br/><br/>
 
 [![Node.js CI](https://img.shields.io/badge/Node.js-%3E%3D18.0.0-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Tests Passing](https://img.shields.io/badge/Tests-95%2F95%20Passing-00e5ff?style=for-the-badge&logo=vitest&logoColor=white)](test/)
+[![Tests Passing](https://img.shields.io/badge/Tests-95%2F95%20Passing-00e5ff?style=for-the-badge&logo=node.js&logoColor=white)](test/)
 [![Throughput](https://img.shields.io/badge/Throughput-8%2C032%20RPS-f59e0b?style=for-the-badge&logo=speedtest&logoColor=white)](#-production-benchmarks--concurrency-stress-test)
 [![Runtime Dependencies](https://img.shields.io/badge/Dependencies-0%20Zero-10b981?style=for-the-badge)](package.json)
 [![Canvas Engine](https://img.shields.io/badge/Canvas%202D-60%20FPS%20Retina-ec4899?style=for-the-badge&logo=html5&logoColor=white)](#)
@@ -45,6 +45,7 @@
 - **General Relativistic Mechanics**: Post-Newtonian orbital perihelion precession, spinning millisecond pulsars with relativistic synchrotron jets, and Schwarzschild black holes with differential Doppler-beamed accretion disks.
 - **Odyssey Spacecraft Flight Simulator**: Pilotable aerospace probe with real-time $\Delta v$ propellant budgets, forward predictive N-body trajectory propagation, and gravitational slingshot visualizers.
 - **Circumstellar Habitable Zones**: Stellar luminosity flux equations calculating Goldilocks boundaries, atmospheric Rayleigh twilight scattering, and planetary climate classifications.
+- **Workspace & Live Body Editor**: In-app modal scenario gallery for rapid scenario deployment and empty sandbox resets, circular-orbit placement calculating tangent Keplerian velocities around the dominant attractor, and a real-time body editor to modify celestial mass, radius, and velocity vectors on the fly.
 - **Swiss Horology Telemetry HUD**: Aerospace optical reticle corner brackets, vector telemetry cards, picture-in-picture orbital radar with all five Lagrange points ($L_1-L_5$), and a lossless 300-state temporal scrubbing ring buffer.
 - **Production-Hardened Static Delivery Engine**: Built-in Node.js server pushing **8,032 requests/second** under 1,000 concurrent keep-alive connections with zero-disk I/O RAM caching, pre-compressed gzip streams, ETag validation, and comprehensive CSP security headers.
 
@@ -86,7 +87,7 @@ METRIC: SCHWARZSCHILD // RADIUS: r_s = 2GM/c² // BEAMING: δ³ FLUX BOOST // PH
 </p>
 
 - **Keplerian Velocity Shearing**: Differential rotational velocity across logarithmic spiral density wave perturbations ($v \propto r^{-1/2}$).
-- **Relativistic Doppler Beaming**: Intense flux amplification on the approaching limb and dimming on the receding limb ($\delta = \gamma^{-1}(1 - \beta \cos\theta)^{-1}$).
+- **Relativistic Doppler Beaming**: Intense flux amplification on the approaching limb and dimming on the receding limb ($\delta = \gamma^{-1}(1 - eta \cos	heta)^{-1}$).
 - **Photon Sphere & Event Horizon**: Exact visual rendering of the relativistic photon instability ring at $r_{ph} = 1.5 r_s$ and total photon capture within the Schwarzschild horizon.
 
 <br/>
@@ -118,7 +119,7 @@ SYSTEM: CO-ORBITING BINARY // MASS RATIO: 1.25:1.00 // DYNAMICS: DYNAMIC BARYCEN
 </p>
 
 - **True Mutual Barycentric Orbitals**: Massive stellar pairs orbit their shared center of mass without artificial fixed anchors.
-- **Tidal Roche Disruption**: Passing bodies that penetrate the Roche limit ($\approx 2.44 R (M/m)^{1/3}$) undergo catastrophic tidal disruption and mass accretion.
+- **Tidal Roche Disruption**: Passing bodies that penetrate the Roche limit ($pprox 2.44 R (M/m)^{1/3}$) undergo catastrophic tidal disruption and mass accretion.
 - **Chaotic Three-Body Dynamics**: High-precision integration captures orbital resonance, figure-8 configurations, and chaotic ejections.
 
 <br/>
@@ -136,6 +137,14 @@ STELLAR MODEL: G2V MAIN SEQUENCE // LUMINOSITY: L = M³.5 // HABITABLE CORRIDOR:
 - **Dynamic Stellar Flux Modeling**: Runaway greenhouse and maximum greenhouse boundaries scale dynamically with stellar mass and temperature ($L = M^{3.5}$).
 - **Astrobiological Climate Scoring**: Real-time thermal classification categorizing planets into *Infernal*, *Temperate* (liquid water zone), and *Cryogenic*.
 - **Atmospheric Twilight Scattering**: Multi-layer Rayleigh glow rendering illuminated planetary crescents and atmospheric horizons.
+
+<br/>
+
+### 🛠️ 6. Workspace Suite: Scenario Gallery, Circular Orbit Placement & Body Editor
+
+- **Scenario Gallery Modal**: Open via the `Explore scenarios` interface to launch curated astrophysical presets (`solarSystem`, `binaryStars`, `blackHoleFeasting`, `pulsarSystem`) or initialize an empty sandbox.
+- **Circular Orbit Placement**: Toggle placement mode from *Free launch* to *Circular orbit* to automatically compute tangent Keplerian orbital velocity ($v = \sqrt{GM/r}$) around the nearest dominant attractor, with support for prograde and retrograde directions.
+- **Live Celestial Body Inspector & Editor**: Select any celestial body in the viewport to inspect and directly edit its `name`, `mass`, `radius`, and velocity vector components (`vx`, `vy`) in real time with instant physical simulation updates.
 
 ---
 
@@ -161,8 +170,8 @@ Inspired by Swiss horological precision and aerospace flight directors, Event Ho
 | **Ring Buffer Topology** | 300-state circular buffer | Zero garbage collection pauses, $O(1)$ cyclic push |
 | **Temporal Scrubbing** | Bidirectional scrubbing slider | Frame-stepping backwards/forwards with 100% numerical replay fidelity |
 | **Energy Invariance** | Symplectic phase-space preservation | $\Delta E / E_0 < 0.001\%$ across full 300-frame rewind and resume cycles |
-| **Speed Range** | $0.1\times$ slow-motion to $5.0\times$ orbital acceleration | Smooth sub-frame time scaling without integration breakdown |
-| **Substepping Engine** | 4 sub-steps per animation frame | Eliminates close-encounter tunneling and numerical singularities |
+| **Speed Range** | $0.1	imes$ slow-motion to $5.0	imes$ orbital acceleration | Smooth sub-frame time scaling without integration breakdown |
+| **Substepping Engine** | Adaptive substepping (up to 8 steps/frame) | Eliminates close-encounter tunneling and numerical singularities |
 
 ```javascript
 // State snapshot structure cached in the 300-frame cyclic ring buffer
@@ -185,65 +194,74 @@ class StateRingBuffer {
 ### 1. Symplectic Velocity Verlet Integration
 Standard explicit Euler integration suffers from artificial energy drift and orbital decay. Event Horizon implements symplectic Velocity Verlet integration:
 
-$$\vec{x}(t + \Delta t) = \vec{x}(t) + \vec{v}(t)\Delta t + \frac{1}{2}\vec{a}(t)\Delta t^2$$
+$$ec{x}(t + \Delta t) = ec{x}(t) + ec{v}(t)\Delta t + rac{1}{2}ec{a}(t)\Delta t^2$$
 
-$$\vec{v}(t + \Delta t) = \vec{v}(t) + \frac{1}{2}\left[\vec{a}(t) + \vec{a}(t + \Delta t)\right]\Delta t$$
+$$ec{v}(t + \Delta t) = ec{v}(t) + rac{1}{2}\left[ec{a}(t) + ec{a}(t + \Delta t)ight]\Delta t$$
 
 Paired with a Plummer softening length ($\epsilon = 2.0$) to eliminate numerical singularities during close encounters:
 
-$$\vec{a}_i = \sum_{j \ne i} \frac{G M_j (\vec{x}_j - \vec{x}_i)}{\left(\|\vec{x}_j - \vec{x}_i\|^2 + \epsilon^2\right)^{3/2}}$$
+$$ec{a}_i = \sum_{j 
+e i} rac{G M_j (ec{x}_j - ec{x}_i)}{\left(\|ec{x}_j - ec{x}_i\|^2 + \epsilon^2ight)^{3/2}}$$
 
 ### 2. General-Relativistic Post-Newtonian Precession
-To model Einsteinian orbital precession (e.g., Mercury's perihelion advance), a post-Newtonian radial perturbation is applied where $L = \|\vec{r} \times \vec{v}\|$ is the specific relative angular momentum:
+To model Einsteinian orbital precession (e.g., Mercury's perihelion advance), a post-Newtonian radial perturbation is applied where $L = \|ec{r} 	imes ec{v}\|$ is the specific relative angular momentum:
 
-$$\vec{a}_{total} = -\frac{G M}{r^3}\vec{r} - \frac{3 G M L^2}{c^2 r^5}\vec{r}$$
+$$ec{a}_{total} = -rac{G M}{r^3}ec{r} - rac{3 G M L^2}{c^2 r^5}ec{r}$$
 
 This induces an authentic advance of the line of apsides per orbital period:
 
-$$\Delta \varpi \approx \frac{6 \pi G M}{c^2 a (1 - e^2)}$$
+$$\Delta arpi pprox rac{6 \pi G M}{c^2 a (1 - e^2)}$$
 
 ### 3. Circumstellar Habitable Zone Boundaries
 Habitable zone orbital boundaries scale with stellar luminosity $L = M^{3.5}$ (for main-sequence stars):
 
-$$r_{\text{inner}} = \sqrt{\frac{L}{1.1}} \text{ AU (Runaway Greenhouse Limit)}$$
+$$r_{	ext{inner}} = \sqrt{rac{L}{1.1}} 	ext{ AU (Runaway Greenhouse Limit)}$$
 
-$$r_{\text{mid}} = \sqrt{L} \text{ AU (Optimum Earth-Equivalent Flux)}$$
+$$r_{	ext{mid}} = \sqrt{L} 	ext{ AU (Optimum Earth-Equivalent Flux)}$$
 
-$$r_{\text{outer}} = \sqrt{\frac{L}{0.53}} \text{ AU (Maximum Greenhouse Limit)}$$
+$$r_{	ext{outer}} = \sqrt{rac{L}{0.53}} 	ext{ AU (Maximum Greenhouse Limit)}$$
 
 ### 4. Coplanar Hohmann Transfer Orbits
 Calculates the minimum two-impulse semi-major axis $a_{tx}$ and velocity increments $\Delta v_1$ and $\Delta v_2$ between two orbits:
 
-$$a_{tx} = \frac{r_1 + r_2}{2}, \quad v_{tx1} = \sqrt{\mu\left(\frac{2}{r_1} - \frac{1}{a_{tx}}\right)}, \quad v_{tx2} = \sqrt{\mu\left(\frac{2}{r_2} - \frac{1}{a_{tx}}\right)}$$
+$$a_{tx} = rac{r_1 + r_2}{2}, \quad v_{tx1} = \sqrt{\mu\left(rac{2}{r_1} - rac{1}{a_{tx}}ight)}, \quad v_{tx2} = \sqrt{\mu\left(rac{2}{r_2} - rac{1}{a_{tx}}ight)}$$
 
-$$\Delta v_{total} = |v_{tx1} - v_{circ1}| + |v_{circ2} - v_{tx2}|, \quad t_{tx} = \pi \sqrt{\frac{a_{tx}^3}{\mu}}$$
+$$\Delta v_{total} = |v_{tx1} - v_{circ1}| + |v_{circ2} - v_{tx2}|, \quad t_{tx} = \pi \sqrt{rac{a_{tx}^3}{\mu}}$$
 
 ### 5. Relativistic Doppler Beaming in Accretion Disks
 Observed luminous flux $I_{obs}$ scales with the relativistic Doppler factor $\delta$:
 
-$$\delta = \frac{1}{\gamma(1 - \beta \cos\theta)}, \quad I_{obs} = I_0 \cdot \delta^3$$
+$$\delta = rac{1}{\gamma(1 - eta \cos	heta)}, \quad I_{obs} = I_0 \cdot \delta^3$$
 
-Where $\beta = v/c$, $\gamma = (1 - \beta^2)^{-1/2}$, creating an approaching blue-shifted limb and a receding red-shifted limb.
+Where $eta = v/c$, $\gamma = (1 - eta^2)^{-1/2}$, creating an approaching blue-shifted limb and a receding red-shifted limb.
 
 ---
 
-## 🎮 Flight Simulator & Keyboard Controls
+## 🎮 Flight Simulator & Controls
 
 <div align="center">
 
-| Key / Input | Action | Subsystem & Function |
+| Key / Input | Action | Context & Subsystem Function |
 | :---: | :--- | :--- |
-| <kbd>W</kbd> | **Forward Thrusters** | Fires main engine, consumes $\Delta v$ propellant, accelerates forward |
-| <kbd>A</kbd> / <kbd>D</kbd> | **Rotate Attitude** | Rotates spacecraft thrust vector counter-clockwise / clockwise |
-| <kbd>S</kbd> | **Retro-Brake** | Fires forward attitude thrusters to arrest orbital velocity |
-| <kbd>Space</kbd> | **Pause / Play** | Freezes simulation time for tactical inspection and conics review |
-| <kbd>1</kbd> | **Free Cam** | Pan and zoom freely anywhere across deep space |
-| <kbd>2</kbd> | **Locked Cam** | Centers camera lock onto the selected planet or spacecraft |
-| <kbd>3</kbd> | **Chase Cam** | Locks onto target and rotates camera frame with its velocity vector |
+| <kbd>W</kbd> / <kbd>↑</kbd> | **Prograde Thruster** | Fires main engine aligned with velocity vector ($+ec{v}$), consuming $\Delta v$ |
+| <kbd>S</kbd> / <kbd>↓</kbd> | **Retrograde Thruster** | Fires thrusters opposed to velocity vector ($-ec{v}$) to decelerate |
+| <kbd>A</kbd> / <kbd>←</kbd> | **Radial-In Burn** | Fires thrusters radially inward towards the primary gravitational attractor |
+| <kbd>D</kbd> / <kbd>→</kbd> | **Radial-Out Burn** | Fires thrusters radially outward away from the primary gravitational attractor |
+| <kbd>R</kbd> | **Refuel Spacecraft** | Restores spacecraft propellant reserves to maximum $\Delta v$ capacity |
+| <kbd>WASD / Arrows</kbd> | **Directional Thrusters** | Up, Down, Left, Right translational thruster burns (during Flight Challenges) |
+| <kbd>Space</kbd> | **Pause / Play** | Freezes simulation time for tactical inspection and conics analysis |
+| <kbd>1</kbd> | **Free Cam** | Pan and zoom freely anywhere across the viewport |
+| <kbd>2</kbd> | **Locked Cam** | Centers camera lock onto the selected celestial body or spacecraft |
+| <kbd>3</kbd> | **Chase Cam** | Locks onto target and rotates camera frame with its velocity heading |
 | <kbd>4</kbd> | **Barycenter Cam** | Continuously frames the system center of mass ($R_{com}$) |
-| <kbd>C</kbd> | **Clear Trails** | Wipes historical orbital trajectory paths |
-| <kbd>Click & Drag</kbd> | **Launch Vector** | Aims and launches new celestial bodies or probes into orbit |
-| <kbd>Right-Click / Wheel</kbd> | **Pan & Zoom** | Smooth infinite viewport navigation |
+| <kbd>F</kbd> | **Follow / Focus** | Toggles camera tracking lock on the currently selected body |
+| <kbd>C</kbd> | **Clear Trails** | Wipes all historical orbital trajectory paths |
+| <kbd>R</kbd> | **Step Backward** | Steps 1 frame backward in time history (when spacecraft is inactive) |
+| <kbd>Click & Drag (Free)</kbd> | **Launch Vector** | Sets initial launch position and vector velocity for new celestial bodies |
+| <kbd>Click / Drag (Circular)</kbd> | **Circular Orbit** | Snaps new body into calculated circular Keplerian orbit around dominant attractor |
+| <kbd>Click Body</kbd> | **Select Body** | Opens telemetry inspector and live body parameter editor |
+| <kbd>Right / Middle / Shift Drag</kbd> | **Pan Viewport** | Smooth infinite viewport navigation |
+| <kbd>Mouse Wheel</kbd> | **Zoom Viewport** | Exponential camera zoom in / out |
 
 </div>
 
@@ -259,6 +277,7 @@ flowchart TD
         AudioMixer[Web Audio Synthesizer Mixer]
         FlightHUD[Spacecraft Flight Director HUD]
         Chrono[Meridian Chronometer Dial]
+        Workspace[Scenario Gallery & Live Body Editor]
     end
 
     subgraph Core_Engine [Physics & Simulation Core]
@@ -317,6 +336,17 @@ An automated high-concurrency stress test ([`test/load-test.js`](test/load-test.
 - **ETag & HTTP 304 Validation**: Client-side revalidation saves network bandwidth and CPU cycles.
 - **Strict Content Security Policy (CSP)**: Robust protection against XSS and resource injection.
 
+### Configuration & Environment Variables
+
+The server and stress test suites read the following optional environment variables:
+
+| Variable | Target | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `PORT` | `server.js`, `test/load-test.js` | `8080` | HTTP listener port for the static server and stress testing |
+| `CONCURRENCY` | `test/load-test.js` | `1000` | Number of simultaneous concurrent virtual user connections |
+| `DURATION` | `test/load-test.js` | `6` | Duration of load test execution in seconds |
+| `HOST` | `test/load-test.js` | `127.0.0.1` | Target server hostname or IP address for the load test |
+
 ---
 
 ## ⚡ Quickstart
@@ -331,15 +361,18 @@ An automated high-concurrency stress test ([`test/load-test.js`](test/load-test.
 git clone https://github.com/underratedgitter/Event-Horizon.git
 cd Event-Horizon
 
-# Start the high-concurrency hardened HTTP server
+# Start the high-concurrency hardened HTTP server (default: port 8080)
 npm start
+
+# Optionally run on a custom port
+PORT=3000 npm start
 ```
 
 Visit [`http://localhost:8080`](http://localhost:8080) in your browser.
 
 ### 2. Run Test Suites
 ```bash
-# Run unit & astrodynamics test suite (95 tests)
+# Run unit & astrodynamics test suite (95 tests via Node.js test runner)
 npm test
 
 # Run high-concurrency stress test (1,000 users)
@@ -356,24 +389,38 @@ npm run test:e2e
 ```
 Event-Horizon/
 ├── .github/
-│   ├── workflows/test.yml          # GitHub Actions CI matrix (Node 18, 20, 22)
 │   ├── ISSUE_TEMPLATE/             # Bug report & feature request templates
-│   └── PULL_REQUEST_TEMPLATE.md    # Code review & quality checklist
+│   │   ├── bug_report.md
+│   │   └── feature_request.md
+│   ├── PULL_REQUEST_TEMPLATE.md    # Code review & quality checklist
+│   └── workflows/
+│       └── deploy.yml              # GitHub Actions CI & Pages deployment (Node 24)
 ├── docs/
-│   ├── assets/                     # High-resolution screenshots & UI previews
-│   │   ├── event-horizon-banner.svg# High-craft vector aerospace banner
-│   │   ├── event-horizon-hero.png  # Playwright verified interface screenshot
-│   │   ├── meridian-chronometer.svg# Swiss horology chronometer vector showcase
-│   │   ├── preview-solar-system.png# Solar system scenario preview
-│   │   ├── preview-black-hole.png  # Black hole accretion disk preview
-│   │   ├── preview-binary-stars.png# Binary stars dance preview
-│   │   ├── preview-pulsar-system.png # Relativistic pulsar preview
-│   │   └── preview-spacecraft-slingshot.png # Spacecraft slingshot preview
+│   ├── MERIDIAN_CHRONOMETER.md     # Swiss horology chronometer whitepaper & specification
 │   ├── adr/                        # Architecture Decision Records
+│   │   ├── 0001-symplectic-verlet-physics.md
+│   │   └── 0002-zero-dependency-canvas-web-audio.md
+│   ├── agents/                     # Project guidelines & issue triage documentation
+│   │   ├── domain.md
+│   │   ├── issue-tracker.md
+│   │   └── triage-labels.md
+│   ├── assets/                     # Vector aerospace banners, UI showcases & scenario previews
+│   │   ├── event-horizon-banner.svg
+│   │   ├── event-horizon-hero.png
+│   │   ├── meridian-chronometer-banner.svg
+│   │   ├── meridian-chronometer.svg
+│   │   ├── preview-binary-stars.png
+│   │   ├── preview-black-hole.png
+│   │   ├── preview-meridian-chronometer-ui.png
+│   │   ├── preview-pulsar-system.png
+│   │   ├── preview-solar-system.png
+│   │   └── preview-spacecraft-slingshot.png
 │   └── spec/                       # Engineering specifications
+│       └── 0001-cosmic-gravity-sandbox.md
 ├── e2e/
 │   ├── app.spec.js                 # Playwright E2E browser test suite
-│   └── screenshots/app.png         # Playwright verified render screenshot
+│   ├── screenshots/app.png         # Playwright verified render screenshot
+│   └── workspace.spec.js           # Playwright E2E tests for gallery, placement & body editor
 ├── scripts/
 │   └── generate-screenshots.js     # Automated Retina screenshot generator
 ├── src/
@@ -381,7 +428,7 @@ Event-Horizon/
 │   ├── body.js                     # Celestial bodies, Doppler accretion disks, pulsars
 │   ├── conics.js                   # Pure Keplerian conics & dominant attractor math
 │   ├── habitable.js                # Circumstellar habitable zone equations
-│   ├── main.js                     # Main loop, substepping, dynamic 30fps fallback
+│   ├── main.js                     # Main loop, adaptive substepping, dynamic 30fps fallback
 │   ├── missions.js                 # Aerospace flight challenges & mission engine
 │   ├── particles.js                # Bounded memory particle explosions & shockwaves
 │   ├── physics.js                  # Symplectic Velocity Verlet engine & state ring buffer
@@ -390,7 +437,8 @@ Event-Horizon/
 │   ├── serialization.js            # URL Base64 state encoding & injection defense
 │   ├── spacecraft.js               # Spacecraft flight simulator & trajectory prediction
 │   ├── spacetime.js                # Gravitational potential field & warp displacement
-│   └── ui.js                       # Swiss horology HUD, telemetry dials, hotkeys
+│   ├── ui.js                       # Swiss horology HUD, telemetry dials, hotkeys
+│   └── workspace.js                # Scenario gallery modal, circular placement & body editor
 ├── test/
 │   ├── conics.test.js              # Keplerian conics math tests
 │   ├── device-scalability.test.js  # Memory cap & low-performance fallback tests
@@ -409,14 +457,21 @@ Event-Horizon/
 │   ├── state_scrubbing.test.js     # Ring buffer time scrubbing tests
 │   ├── supernova.test.js           # Supernova collapse & remnant physics tests
 │   └── visuals.test.js             # Expanding shockwave dissipation tests
-├── index.html                      # Glassmorphic HUD & canvas viewport
-├── server.js                       # Production in-memory static server (8,000+ RPS)
-├── style.css                       # Swiss horology aerospace HUD stylesheet
-├── package.json                    # Package metadata & test scripts
-├── CONTRIBUTING.md                 # Contribution guidelines & coding discipline
-├── SECURITY.md                     # Security policy & defense architecture
+├── .gitattributes                  # Git line ending normalization
+├── .gitignore                      # Git ignore rules
+├── .nojekyll                       # GitHub Pages static hosting directive
 ├── CITATION.cff                    # Citation metadata for researchers
-└── LICENSE                         # MIT License
+├── CONTEXT.md                      # Project architectural context & guidelines
+├── CONTRIBUTING.md                 # Contribution guidelines & coding discipline
+├── LICENSE                         # MIT License
+├── README.md                       # Repository documentation
+├── SECURITY.md                     # Security policy & defense architecture
+├── index.html                      # Glassmorphic HUD & canvas viewport
+├── package-lock.json               # Locked dependency tree
+├── package.json                    # Package metadata & test scripts
+├── playwright.config.js            # Playwright E2E configuration & dev server harness
+├── server.js                       # Production in-memory static server (8,000+ RPS)
+└── style.css                       # Swiss horology aerospace HUD stylesheet
 ```
 
 ---
